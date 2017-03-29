@@ -1,0 +1,17 @@
+﻿{
+    "compilerOptions":
+    {
+        "alwaysStrict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "preserveConstEnums": true,
+        "outFile": "index.js",
+        "target": "es5"
+    },
+    "include":
+    [
+        "ts/index.ts"
+    ]
+}
