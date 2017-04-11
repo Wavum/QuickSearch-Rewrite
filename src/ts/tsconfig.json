@@ -7,11 +7,8 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "preserveConstEnums": true,
-        "outFile": "index.js",
+        "removeComments": true,
+        "module": "commonjs",
         "target": "es5"
-    },
-    "include":
-    [
-        "ts/index.ts"
-    ]
+    }
 }
