@@ -36,8 +36,8 @@ gulp.task("jsBuildDebug", function()
     var typescriptFiles = gulp.src("src/ts/**/*.ts")
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
-                              .pipe(webpack(require("./webpack.config.js")));
-                              //.pipe(gulp.dest(buildDebugPath + "/js"));
+                              .pipe(webpack(require("./webpack.config.js")))
+                              .pipe(gulp.dest(buildDebugPath + "/js"));
                               //.pipe(tsProject());
 
     return es.merge(javascriptFiles, typescriptFiles)

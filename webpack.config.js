@@ -10,9 +10,22 @@ module.exports =
     module:
     {
         loaders:
-        [{
-            test: /\.ts$/,
-            loader: "awesome-typescript-loader"
-        }]
+        [
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
+                enforce: "pre",
+                test: /\.ts$/,
+                loader: "source-map-loader"
+            },
+            {
+                test: /\.ts$/,
+                loader: "awesome-typescript-loader",
+                include: /src/
+            }
+        ]
     }
 }
