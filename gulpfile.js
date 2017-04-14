@@ -2,31 +2,25 @@ var concat = require("gulp-concat");
 var clean = require("gulp-clean");
 var cleanCSS = require("gulp-clean-css");
 var es = require("event-stream");
+var filter = require("gulp-filter");
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
 var sourcemaps = require("gulp-sourcemaps");
 var rename = require("gulp-rename");
 var runSequence = require("run-sequence");
-var tsc = require("gulp-typescript");
-var tsProject = tsc.createProject("src/ts/tsconfig.json");
 var uglify = require("gulp-uglify");
 var webpack = require("webpack-stream");
 
-var buildDebugPath = "build/debug";
-var buildReleasePath = "build/release";
+var buildPath = "build";
 
-gulp.task("cleanBuild", function()
+gulp.task("clean", function()
 {
-    gulp.src(buildDebugPath + "/*", { read: false })
-        .pipe(plumber())
-		.pipe(clean());
-        
-    gulp.src(buildReleasePath + "/*", { read: false })
+    gulp.src(buildPath + "/*", { read: false })
         .pipe(plumber())
 		.pipe(clean());
 });
 
-gulp.task("jsBuildDebug", function()
+gulp.task("jsBuild", function()
 {
     var javascriptFiles = gulp.src("src/js/**/*.js")
                               .pipe(plumber())
@@ -37,36 +31,37 @@ gulp.task("jsBuildDebug", function()
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
                               .pipe(webpack(require("./webpack.config.js")))
-                              .pipe(gulp.dest(buildDebugPath + "/js"));
-                              //.pipe(tsProject());
+                              .pipe(gulp.dest(buildPath + "/js"))
+                              .pipe(filter("**/*.js"));
 
     return es.merge(javascriptFiles, typescriptFiles)
              .pipe(plumber())
              .pipe(uglify())
              .pipe(rename({ extname: ".min.js" }))
              .pipe(sourcemaps.write(".", { includeContent: false }))
-             .pipe(gulp.dest(buildDebugPath + "/js"));
+             .pipe(gulp.dest(buildPath + "/js"));
 });
 
-gulp.task("cssBuildDebug", function()
+gulp.task("cssBuild", function()
 {
     return gulp.src("src/css/**/*.css")
                .pipe(plumber())
                .pipe(sourcemaps.init())
+               .pipe(gulp.dest(buildPath + "/css"))
+               .pipe(sourcemaps.write(".", { includeContent: false }))
                .pipe(cleanCSS())
                .pipe(rename({ extname: ".min.css" }))
-               .pipe(sourcemaps.write(".", { includeContent: false }))
-               .pipe(gulp.dest(buildDebugPath + "/css"));
+               .pipe(gulp.dest(buildPath + "/css"));
 });
 
-gulp.task("indexBuildDebug", function()
+gulp.task("indexBuild", function()
 {
     return gulp.src("src/index.html")
                .pipe(plumber())
-               .pipe(gulp.dest(buildDebugPath));
+               .pipe(gulp.dest(buildPath));
 });
 
-gulp.task("buildDebug", function()
+gulp.task("build", function()
 {
-    runSequence("cleanBuild", ["jsBuildDebug", "cssBuildDebug", "indexBuildDebug"]);
+    runSequence("clean", ["jsBuild", "cssBuild", "indexBuild"]);
 });
