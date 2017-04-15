@@ -12,6 +12,28 @@ var uglify = require("gulp-uglify");
 var webpack = require("webpack-stream");
 
 var buildPath = "build";
+var sourcePath = "src";
+
+gulp.task("jsClean", function()
+{
+    gulp.src(buildPath + "/js/**/*", { read: false })
+        .pipe(plumber())
+		.pipe(clean());
+});
+
+gulp.task("cssClean", function()
+{
+    gulp.src(buildPath + "/css/**/*", { read: false })
+        .pipe(plumber())
+		.pipe(clean());
+});
+
+gulp.task("indexClean", function()
+{
+    gulp.src(buildPath + "/index.html", { read: false })
+        .pipe(plumber())
+		.pipe(clean());
+});
 
 gulp.task("clean", function()
 {
@@ -22,12 +44,12 @@ gulp.task("clean", function()
 
 gulp.task("jsBuild", function()
 {
-    var javascriptFiles = gulp.src("src/js/**/*.js")
+    var javascriptFiles = gulp.src(sourcePath + "/js/**/*.js")
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
                               .pipe(concat("vendor.js"));
 
-    var typescriptFiles = gulp.src("src/ts/**/*.ts")
+    var typescriptFiles = gulp.src(sourcePath + "/ts/**/*.ts")
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
                               .pipe(webpack(require("./webpack.config.js")))
@@ -44,7 +66,7 @@ gulp.task("jsBuild", function()
 
 gulp.task("cssBuild", function()
 {
-    return gulp.src("src/css/**/*.css")
+    return gulp.src(sourcePath + "/css/**/*.css")
                .pipe(plumber())
                .pipe(sourcemaps.init())
                .pipe(gulp.dest(buildPath + "/css"))
@@ -56,7 +78,7 @@ gulp.task("cssBuild", function()
 
 gulp.task("indexBuild", function()
 {
-    return gulp.src("src/index.html")
+    return gulp.src(sourcePath + "/index.html")
                .pipe(plumber())
                .pipe(gulp.dest(buildPath));
 });
@@ -64,4 +86,22 @@ gulp.task("indexBuild", function()
 gulp.task("build", function()
 {
     runSequence("clean", ["jsBuild", "cssBuild", "indexBuild"]);
+});
+
+gulp.task("buildWatch", function()
+{
+    gulp.watch([sourcePath + "/ts/**/*.ts", sourcePath + "/js/**/*.js"], function()
+    {
+        runSequence("jsClean", "jsBuild");
+    });
+
+    gulp.watch(sourcePath + "/css/**/*.css", function()
+    {
+        runSequence("cssClean", "cssBuild");
+    });
+
+    gulp.watch(sourcePath + "/index.html", function()
+    {
+        runSequence("indexClean", "indexBuild");
+    });
 });

@@ -49,7 +49,7 @@
 	var $ = __webpack_require__(1);
 	$(document).ready(function () {
 	    //Test
-	    console.log("Wörks");
+	    console.log("Wörks 1");
 	});
 
 
