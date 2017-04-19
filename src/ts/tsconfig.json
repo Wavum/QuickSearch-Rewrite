@@ -9,7 +9,6 @@
         "preserveConstEnums": true,
         "removeComments": true,
         "sourceMap": true,
-        "module": "commonjs",
         "target": "es5"
     }
 }

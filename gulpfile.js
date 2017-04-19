@@ -2,59 +2,74 @@ var concat = require("gulp-concat");
 var clean = require("gulp-clean");
 var cleanCSS = require("gulp-clean-css");
 var es = require("event-stream");
-var filter = require("gulp-filter");
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
 var sourcemaps = require("gulp-sourcemaps");
+var ts = require("gulp-typescript");
+var tsProject = ts.createProject("src/ts/tsconfig.json");
 var rename = require("gulp-rename");
 var runSequence = require("run-sequence");
 var uglify = require("gulp-uglify");
-var webpack = require("webpack-stream");
 
 var buildPath = "build";
 var sourcePath = "src";
+var vendorCSSPaths = ["node_modules/bootstrap/dist/css/bootstrap.min.css"];
+var vendorJSPaths = ["node_modules/bootstrap/dist/js/bootstrap.min.js", "node_modules/jquery/dist/jquery.min.js"];
+
+gulp.task("vendorClean", function()
+{
+    return gulp.src(buildPath + "/vendor/**/*", { read: false })
+               .pipe(plumber())
+		       .pipe(clean());
+});
 
 gulp.task("jsClean", function()
 {
-    gulp.src(buildPath + "/js/**/*", { read: false })
-        .pipe(plumber())
-		.pipe(clean());
+    return gulp.src(buildPath + "/js/**/*", { read: false })
+               .pipe(plumber())
+		       .pipe(clean());
 });
 
 gulp.task("cssClean", function()
 {
-    gulp.src(buildPath + "/css/**/*", { read: false })
-        .pipe(plumber())
-		.pipe(clean());
+    return gulp.src(buildPath + "/css/**/*", { read: false })
+               .pipe(plumber())
+		       .pipe(clean());
 });
 
 gulp.task("indexClean", function()
 {
-    gulp.src(buildPath + "/index.html", { read: false })
-        .pipe(plumber())
-		.pipe(clean());
+    return gulp.src(buildPath + "/index.html", { read: false })
+               .pipe(plumber())
+		       .pipe(clean());
 });
 
 gulp.task("clean", function()
 {
-    gulp.src(buildPath + "/*", { read: false })
-        .pipe(plumber())
-		.pipe(clean());
+    return gulp.src(buildPath + "/*", { read: false })
+               .pipe(plumber())
+		       .pipe(clean());
+});
+
+gulp.task("vendorBuild", function()
+{
+    gulp.src(vendorCSSPaths)
+        .pipe(gulp.dest(buildPath + "/vendor/css"));
+
+    gulp.src(vendorJSPaths)
+        .pipe(gulp.dest(buildPath + "/vendor/js"));
 });
 
 gulp.task("jsBuild", function()
 {
     var javascriptFiles = gulp.src(sourcePath + "/js/**/*.js")
                               .pipe(plumber())
-                              .pipe(sourcemaps.init())
-                              .pipe(concat("vendor.js"));
+                              .pipe(sourcemaps.init());
 
     var typescriptFiles = gulp.src(sourcePath + "/ts/**/*.ts")
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
-                              .pipe(webpack(require("./webpack.config.js")))
-                              .pipe(gulp.dest(buildPath + "/js"))
-                              .pipe(filter("**/*.js"));
+                              .pipe(tsProject());
 
     return es.merge(javascriptFiles, typescriptFiles)
              .pipe(plumber())
@@ -87,7 +102,7 @@ gulp.task("indexBuild", function()
 
 gulp.task("build", function()
 {
-    runSequence("clean", "jsBuild", "cssBuild", "indexBuild");
+    return runSequence("clean", "vendorBuild", "jsBuild", "cssBuild", "indexBuild");
 });
 
 gulp.task("buildWatch", function()
@@ -104,6 +119,6 @@ gulp.task("buildWatch", function()
 
     gulp.watch(sourcePath + "/index.html", function()
     {
-        runSequence("indexClean", "indexBuild");
+        runSequence("vendorClean", "indexClean", "vendorBuild", "indexBuild");
     });
 });
