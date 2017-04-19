@@ -1,7 +1,8 @@
-import * as $ from "jquery"
+import * as $ from "jquery";
+import "bootstrap";
 
 $(document).ready(function()
 {
     //Test
-    console.log("Wörks 1");
+    console.log("Wörks");
 });

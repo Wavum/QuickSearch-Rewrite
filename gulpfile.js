@@ -66,11 +66,13 @@ gulp.task("jsBuild", function()
 
 gulp.task("cssBuild", function()
 {
+    gulp.src("node_modules/bootstrap/dist/css/bootstrap.min.css")
+        .pipe(cleanCSS())
+        .pipe(gulp.dest(buildPath + "/css"));
+
     return gulp.src(sourcePath + "/css/**/*.css")
                .pipe(plumber())
-               .pipe(sourcemaps.init())
                .pipe(gulp.dest(buildPath + "/css"))
-               .pipe(sourcemaps.write(".", { includeContent: false }))
                .pipe(cleanCSS())
                .pipe(rename({ extname: ".min.css" }))
                .pipe(gulp.dest(buildPath + "/css"));
@@ -85,7 +87,7 @@ gulp.task("indexBuild", function()
 
 gulp.task("build", function()
 {
-    runSequence("clean", ["jsBuild", "cssBuild", "indexBuild"]);
+    runSequence("clean", "jsBuild", "cssBuild", "indexBuild");
 });
 
 gulp.task("buildWatch", function()

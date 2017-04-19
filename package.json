@@ -2,7 +2,7 @@
   "name": "quicksearch-rewrite",
   "version": "1.0.0",
   "description": "Rewrite of QuickSearch, will be merged when complete. https://github.com/Wavum/QuickSearch",
-  "main": "index.html",
+  "main": "build/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "http://quicksearch.site",
   "devDependencies": {
+    "@types/bootstrap": "^3.3.32",
     "@types/jquery": "^2.0.41",
     "awesome-typescript-loader": "^3.1.2",
     "event-stream": "^3.3.4",
@@ -37,6 +38,7 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "jquery": "^3.2.1"
   }
 }
