@@ -11,7 +11,7 @@ var rename = require("gulp-rename");
 var runSequence = require("run-sequence");
 var uglify = require("gulp-uglify");
 
-var buildPath = "build";
+var buildPath = "dist";
 var sourcePath = "src";
 var vendorCSSPaths = ["node_modules/bootstrap/dist/css/bootstrap.min.css"];
 var vendorJSPaths = ["node_modules/bootstrap/dist/js/bootstrap.min.js", "node_modules/jquery/dist/jquery.min.js"];
