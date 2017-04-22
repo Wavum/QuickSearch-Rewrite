@@ -4,6 +4,7 @@ var cleanCSS = require("gulp-clean-css");
 var es = require("event-stream");
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
+var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("src/ts/tsconfig.json");
@@ -81,16 +82,18 @@ gulp.task("jsBuild", function()
 
 gulp.task("cssBuild", function()
 {
-    gulp.src("node_modules/bootstrap/dist/css/bootstrap.min.css")
-        .pipe(cleanCSS())
-        .pipe(gulp.dest(buildPath + "/css"));
+    var cssFiles = gulp.src(sourcePath + "/css/**/*.css")
+                       .pipe(plumber());
 
-    return gulp.src(sourcePath + "/css/**/*.css")
-               .pipe(plumber())
-               .pipe(gulp.dest(buildPath + "/css"))
-               .pipe(cleanCSS())
-               .pipe(rename({ extname: ".min.css" }))
-               .pipe(gulp.dest(buildPath + "/css"));
+    var scssFiles = gulp.src(sourcePath + "/scss/**/*.scss")
+                       .pipe(plumber())
+                       .pipe(sass());
+
+    return es.merge(cssFiles, scssFiles)
+             .pipe(plumber())
+             .pipe(cleanCSS())
+             .pipe(rename({ extname: ".min.css" }))
+             .pipe(gulp.dest(buildPath + "/css"));
 });
 
 gulp.task("indexBuild", function()
@@ -112,7 +115,7 @@ gulp.task("buildWatch", function()
         runSequence("jsClean", "jsBuild");
     });
 
-    gulp.watch(sourcePath + "/css/**/*.css", function()
+    gulp.watch([sourcePath + "/css/**/*.css", sourcePath + "/scss/**/*.scss"], function()
     {
         runSequence("cssClean", "cssBuild");
     });
