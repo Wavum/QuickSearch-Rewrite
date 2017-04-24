@@ -1,3 +1,4 @@
+var autoprefixer = require("gulp-autoprefixer");
 var concat = require("gulp-concat");
 var clean = require("gulp-clean");
 var cleanCSS = require("gulp-clean-css");
@@ -15,7 +16,7 @@ var uglify = require("gulp-uglify");
 var buildPath = "dist";
 var sourcePath = "src";
 var vendorCSSPaths = ["node_modules/bootstrap/dist/css/bootstrap.min.css"];
-var vendorJSPaths = ["node_modules/bootstrap/dist/js/bootstrap.min.js", "node_modules/jquery/dist/jquery.min.js"];
+var vendorJSPaths = ["node_modules/jquery/dist/jquery.min.js", "node_modules/tether/dist/js/tether.min.js", "node_modules/bootstrap/dist/js/bootstrap.min.js"];
 
 gulp.task("vendorClean", function()
 {
@@ -74,6 +75,7 @@ gulp.task("jsBuild", function()
 
     return es.merge(javascriptFiles, typescriptFiles)
              .pipe(plumber())
+             .pipe(concat("index.js"))
              .pipe(uglify())
              .pipe(rename({ extname: ".min.js" }))
              .pipe(sourcemaps.write(".", { includeContent: false }))
@@ -91,6 +93,8 @@ gulp.task("cssBuild", function()
 
     return es.merge(cssFiles, scssFiles)
              .pipe(plumber())
+             .pipe(concat("index.css"))
+             .pipe(autoprefixer())
              .pipe(cleanCSS())
              .pipe(rename({ extname: ".min.css" }))
              .pipe(gulp.dest(buildPath + "/css"));
