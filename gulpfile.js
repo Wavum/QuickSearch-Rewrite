@@ -76,25 +76,31 @@ gulp.task("jsBuild", function()
     return es.merge(javascriptFiles, typescriptFiles)
              .pipe(plumber())
              .pipe(concat("index.js"))
+             .pipe(sourcemaps.write(".", { includeContent: false }))
+             .pipe(gulp.dest(buildPath + "/js"))
              .pipe(uglify())
              .pipe(rename({ extname: ".min.js" }))
-             .pipe(sourcemaps.write(".", { includeContent: false }))
              .pipe(gulp.dest(buildPath + "/js"));
 });
 
 gulp.task("cssBuild", function()
 {
     var cssFiles = gulp.src(sourcePath + "/css/**/*.css")
-                       .pipe(plumber());
+                       .pipe(plumber())
+                       .pipe(sourcemaps.init());
 
     var scssFiles = gulp.src(sourcePath + "/scss/**/*.scss")
                        .pipe(plumber())
+                       .pipe(sourcemaps.init())
                        .pipe(sass());
 
     return es.merge(cssFiles, scssFiles)
              .pipe(plumber())
              .pipe(concat("index.css"))
              .pipe(autoprefixer())
+             .pipe(sourcemaps.write(".", { includeContent: false }))
+             .pipe(gulp.dest(buildPath + "/css"))
+             .pipe(concat("index.css")) //Because of buf from sourcemaps.write
              .pipe(cleanCSS())
              .pipe(rename({ extname: ".min.css" }))
              .pipe(gulp.dest(buildPath + "/css"));
