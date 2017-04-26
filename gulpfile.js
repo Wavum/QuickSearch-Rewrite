@@ -1,7 +1,7 @@
 var autoprefixer = require("gulp-autoprefixer");
 var concat = require("gulp-concat");
-var clean = require("gulp-clean");
 var cleanCSS = require("gulp-clean-css");
+var del = require("del");
 var es = require("event-stream");
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
@@ -20,37 +20,27 @@ var vendorJSPaths = ["node_modules/jquery/dist/jquery.min.js", "node_modules/tet
 
 gulp.task("vendorClean", function()
 {
-    return gulp.src(buildPath + "/vendor/**/*", { read: false })
-               .pipe(plumber())
-		       .pipe(clean());
+    return del(buildPath + "/vendor/**/*");
 });
 
 gulp.task("jsClean", function()
 {
-    return gulp.src(buildPath + "/js/**/*", { read: false })
-               .pipe(plumber())
-		       .pipe(clean());
+    return del(buildPath + "/js/**/*");
 });
 
 gulp.task("cssClean", function()
 {
-    return gulp.src(buildPath + "/css/**/*", { read: false })
-               .pipe(plumber())
-		       .pipe(clean());
+    return del(buildPath + "/css/**/*");
 });
 
 gulp.task("indexClean", function()
 {
-    return gulp.src(buildPath + "/index.html", { read: false })
-               .pipe(plumber())
-		       .pipe(clean());
+    return del(buildPath + "/index.html");
 });
 
 gulp.task("clean", function()
 {
-    return gulp.src(buildPath + "/*", { read: false })
-               .pipe(plumber())
-		       .pipe(clean());
+    return del(buildPath + "/*");
 });
 
 gulp.task("vendorBuild", function()
