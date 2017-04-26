@@ -73,14 +73,19 @@ gulp.task("jsBuild", function()
                               .pipe(sourcemaps.init())
                               .pipe(tsProject());
 
-    return es.merge(javascriptFiles, typescriptFiles)
-             .pipe(plumber())
-             .pipe(concat("index.js"))
-             .pipe(sourcemaps.write(".", { includeContent: false }))
-             .pipe(gulp.dest(buildPath + "/js"))
-             .pipe(uglify())
-             .pipe(rename({ extname: ".min.js" }))
-             .pipe(gulp.dest(buildPath + "/js"));
+    var javascriptFile = es.merge(javascriptFiles, typescriptFiles)
+                           .pipe(plumber())
+                           .pipe(concat("index.js"));
+
+    javascriptFile.pipe(plumber())
+                  .pipe(concat("index.js")) //Without this line the file wouldn't be included
+                  .pipe(sourcemaps.write(".", { includeContent: false }))
+                  .pipe(gulp.dest(buildPath + "/js"));
+
+    javascriptFile.pipe(plumber())
+                  .pipe(uglify())
+                  .pipe(rename({ extname: ".min.js" }))
+                  .pipe(gulp.dest(buildPath + "/js"));
 });
 
 gulp.task("cssBuild", function()
@@ -94,16 +99,20 @@ gulp.task("cssBuild", function()
                        .pipe(sourcemaps.init())
                        .pipe(sass());
 
-    return es.merge(cssFiles, scssFiles)
-             .pipe(plumber())
-             .pipe(concat("index.css"))
-             .pipe(autoprefixer())
-             .pipe(sourcemaps.write(".", { includeContent: false }))
-             .pipe(gulp.dest(buildPath + "/css"))
-             .pipe(concat("index.css")) //Because of buf from sourcemaps.write
-             .pipe(cleanCSS())
-             .pipe(rename({ extname: ".min.css" }))
-             .pipe(gulp.dest(buildPath + "/css"));
+    var cssFile = es.merge(cssFiles, scssFiles)
+                    .pipe(plumber())
+                    .pipe(concat("index.css"))
+                    .pipe(autoprefixer());
+
+    cssFile.pipe(plumber())
+           .pipe(concat("index.css")) //Without this line the file wouldn't be included
+           .pipe(sourcemaps.write(".", { includeContent: false }))
+           .pipe(gulp.dest(buildPath + "/css"));
+
+    cssFile.pipe(plumber())
+           .pipe(cleanCSS())
+           .pipe(rename({ extname: ".min.css" }))
+           .pipe(gulp.dest(buildPath + "/css"));
 });
 
 gulp.task("indexBuild", function()
