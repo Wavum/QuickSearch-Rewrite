@@ -69,7 +69,7 @@ gulp.task("jsBuild", function()
 
     javascriptFile.pipe(plumber())
                   .pipe(concat("index.js")) //Without this line the file wouldn't be included
-                  .pipe(sourcemaps.write(".", { includeContent: false, sourceRoot: ""/*Hat damit was zu tun*/ }))
+                  .pipe(sourcemaps.write(".", { includeContent: false, sourceRoot: ""/* Hat damit was zu tun */ }))
                   .pipe(gulp.dest(buildPath + "/js"));
 
     javascriptFile.pipe(plumber())
