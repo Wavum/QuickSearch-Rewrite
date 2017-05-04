@@ -6,7 +6,7 @@ namespace QuickSearch
     {
         public static main(): void
         {
-            let clock = new Clock("clock");
+            let clock = new Clock("main-clock");
             
             clock.initInterval();
         }

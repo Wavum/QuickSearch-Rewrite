@@ -33,6 +33,11 @@ gulp.task("cssClean", function()
     return del(buildPath + "/css/**/*");
 });
 
+gulp.task("fontsClean", function()
+{
+    return del(buildPath + "/fonts/**/*");
+});
+
 gulp.task("indexClean", function()
 {
     return del(buildPath + "/index.html");
@@ -106,6 +111,13 @@ gulp.task("cssBuild", function()
            .pipe(gulp.dest(buildPath + "/css"));
 });
 
+gulp.task("fontsBuild", function()
+{
+    return gulp.src(sourcePath + "/fonts/**/*")
+               .pipe(plumber())
+               .pipe(gulp.dest(buildPath + "/fonts"));
+});
+
 gulp.task("indexBuild", function()
 {
     return gulp.src(sourcePath + "/index.html")
@@ -115,7 +127,7 @@ gulp.task("indexBuild", function()
 
 gulp.task("build", function()
 {
-    return runSequence("clean", "vendorBuild", "jsBuild", "cssBuild", "indexBuild");
+    return runSequence("clean", "fontsBuild", "vendorBuild", "jsBuild", "cssBuild", "indexBuild");
 });
 
 gulp.task("buildWatch", function()

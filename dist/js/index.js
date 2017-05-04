@@ -46,7 +46,7 @@ var QuickSearch;
         function Index() {
         }
         Index.main = function () {
-            var clock = new QuickSearch.Clock("clock");
+            var clock = new QuickSearch.Clock("main-clock");
             clock.initInterval();
         };
         return Index;

@@ -1,0 +1,17 @@
+@font-face
+{
+	font-family: "Lato";
+	src: url("../fonts/Lato/lato.eot");
+	src: url("../fonts/Lato/lato.eot?#iefix") format("embedded-opentype"),
+         url("../fonts/Lato/lato.woff2") format("woff2"),
+	     url("../fonts/Lato/lato.woff") format("woff"),
+	     url("../fonts/Lato/lato.ttf") format("truetype"),
+	     url("../fonts/Lato/lato.svg#laot") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.clock
+{
+    font-size: 800%;
+}
