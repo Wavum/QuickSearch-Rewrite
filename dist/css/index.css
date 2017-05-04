@@ -65,6 +65,11 @@ html, body {
   font-weight: normal;
   font-style: normal; }
 
+.qs {
+  font-family: "Lato";
+  background-color: #363636;
+  color: #3a5b83; }
+
 .clock {
   font-size: 800%; }
 

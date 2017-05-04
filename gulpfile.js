@@ -86,23 +86,24 @@ gulp.task("jsBuild", function()
 
 gulp.task("cssBuild", function()
 {
-    var cssFiles = gulp.src(sourcePath + "/css/**/*.css")
-                       .pipe(plumber())
-                       .pipe(sourcemaps.init());
+    // Hopefully later supported: https://github.com/gulp-sourcemaps/gulp-sourcemaps/issues/191
+    // var cssFiles = gulp.src(sourcePath + "/css/**/*.css")
+    //                    .pipe(plumber())
+    //                    .pipe(sourcemaps.init());
 
     var scssFiles = gulp.src(sourcePath + "/scss/**/*.scss")
                        .pipe(plumber())
                        .pipe(sourcemaps.init())
                        .pipe(sass());
 
-    var cssFile = es.merge(cssFiles, scssFiles)
+    var cssFile = es.merge(/*cssFiles, */scssFiles)
                     .pipe(plumber())
                     .pipe(concat("index.css"))
                     .pipe(autoprefixer());
 
     cssFile.pipe(plumber())
            .pipe(concat("index.css")) //Without this line the file wouldn't be included
-           .pipe(sourcemaps.write(".", { includeContent: false }))
+           .pipe(sourcemaps.write(".", { includeContent: false, sourceRoot: "../../src/scss" }))
            .pipe(gulp.dest(buildPath + "/css"));
 
     cssFile.pipe(plumber())
