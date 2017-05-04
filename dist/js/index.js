@@ -5,7 +5,8 @@ var QuickSearch;
         function Index() {
         }
         Index.main = function () {
-            var clock = new QuickSearch.Clock();
+            var clock = new QuickSearch.Clock("clock");
+            clock.initInterval();
         };
         return Index;
     }());
@@ -17,10 +18,9 @@ var QuickSearch;
 var QuickSearch;
 (function (QuickSearch) {
     var Clock = (function () {
-        function Clock() {
-            this.clock = $("#clock");
+        function Clock(clockID) {
             this.separator = ":";
-            this.initInterval();
+            this.clock = $("." + clockID);
         }
         Object.defineProperty(Clock.prototype, "Seperator", {
             set: function (value) {

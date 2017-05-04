@@ -2,14 +2,14 @@ namespace QuickSearch
 {
     export class Clock
     {
-        private clock: JQuery = $("#clock");
+        private clock: JQuery;
         private separator: string = ":";
 
 
 
-        public constructor()
+        public constructor(clockID: string)
         {
-            this.initInterval();
+            this.clock = $("." + clockID);
         }
 
 
@@ -28,14 +28,14 @@ namespace QuickSearch
             this.updateTime();
         }
 
-
-
-        private initInterval(): void
+        public initInterval(): void
         {
             this.updateTime();
             setInterval(this.updateTime.bind(this), 10000);
         }
-            
+
+
+
         private updateTime(): void
         {
             let date: Date = new Date();
