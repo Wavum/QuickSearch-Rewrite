@@ -1,0 +1,4 @@
+{
+    "tslint.exclude": ["node_modules", "dist"],
+    "eslint.workingDirectories": ["src"]
+}
