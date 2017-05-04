@@ -19,7 +19,6 @@
   "devDependencies": {
     "@types/bootstrap": "^3.3.33",
     "@types/jquery": "^2.0.41",
-    "bootstrap": "^4.0.0-alpha.6",
     "del": "^2.2.2",
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
@@ -38,7 +37,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-alpha.6",
     "jquery": "^3.2.1",
     "tether": "^1.4.0"
   }
