@@ -54,22 +54,23 @@ gulp.task("vendorBuild", function()
 
 gulp.task("jsBuild", function()
 {
-    var javascriptFiles = gulp.src(sourcePath + "/js/**/*.js")
-                              .pipe(plumber())
-                              .pipe(sourcemaps.init());
+    // Hopefully later supported: https://github.com/gulp-sourcemaps/gulp-sourcemaps/issues/191
+    // var javascriptFiles = gulp.src(sourcePath + "/js/**/*.js")
+    //                           .pipe(plumber())
+    //                           .pipe(sourcemaps.init()); 
 
     var typescriptFiles = gulp.src(sourcePath + "/ts/**/*.ts")
                               .pipe(plumber())
                               .pipe(sourcemaps.init())
                               .pipe(tsProject());
 
-    var javascriptFile = es.merge(javascriptFiles, typescriptFiles)
+    var javascriptFile = es.merge(/*javascriptFiles, */typescriptFiles)
                            .pipe(plumber())
                            .pipe(concat("index.js"));
 
     javascriptFile.pipe(plumber())
                   .pipe(concat("index.js")) //Without this line the file wouldn't be included
-                  .pipe(sourcemaps.write(".", { includeContent: false, sourceRoot: ""/* Hat damit was zu tun */ }))
+                  .pipe(sourcemaps.write(".", { includeContent: false, sourceRoot: "../src/ts" }))
                   .pipe(gulp.dest(buildPath + "/js"));
 
     javascriptFile.pipe(plumber())
