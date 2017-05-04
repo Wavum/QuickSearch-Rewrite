@@ -1,0 +1,20 @@
+{
+    "version": "0.1.0",
+    "showOutput": "silent",
+    "tasks":
+    [
+        {
+            "taskName": "Build",
+            "command": "gulp",
+            "args": ["build"],
+            "isShellCommand": true,
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "BuildWatch",
+            "command": "gulp",
+            "args": ["buildWatch"],
+            "isShellCommand": true
+        }
+    ]
+}
