@@ -1,3 +1,5 @@
+/// <reference path="Clock/Clock.ts" />
+
 namespace QuickSearch
 {
     export class Index

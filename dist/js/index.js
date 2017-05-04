@@ -1,26 +1,10 @@
 "use strict";
 var QuickSearch;
 (function (QuickSearch) {
-    var Index = (function () {
-        function Index() {
-        }
-        Index.main = function () {
-            var clock = new QuickSearch.Clock("clock");
-            clock.initInterval();
-        };
-        return Index;
-    }());
-    QuickSearch.Index = Index;
-    Index.main();
-})(QuickSearch || (QuickSearch = {}));
-
-"use strict";
-var QuickSearch;
-(function (QuickSearch) {
     var Clock = (function () {
         function Clock(clockID) {
             this.separator = ":";
-            this.clock = $("." + clockID);
+            this.clock = $("#" + clockID);
         }
         Object.defineProperty(Clock.prototype, "Seperator", {
             set: function (value) {
@@ -54,6 +38,21 @@ var QuickSearch;
         return Clock;
     }());
     QuickSearch.Clock = Clock;
+})(QuickSearch || (QuickSearch = {}));
+"use strict";
+var QuickSearch;
+(function (QuickSearch) {
+    var Index = (function () {
+        function Index() {
+        }
+        Index.main = function () {
+            var clock = new QuickSearch.Clock("clock");
+            clock.initInterval();
+        };
+        return Index;
+    }());
+    QuickSearch.Index = Index;
+    Index.main();
 })(QuickSearch || (QuickSearch = {}));
 
 //# sourceMappingURL=index.js.map

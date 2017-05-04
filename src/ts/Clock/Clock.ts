@@ -9,7 +9,7 @@ namespace QuickSearch
 
         public constructor(clockID: string)
         {
-            this.clock = $("." + clockID);
+            this.clock = $("#" + clockID);
         }
 
 
@@ -31,6 +31,7 @@ namespace QuickSearch
         public initInterval(): void
         {
             this.updateTime();
+
             setInterval(this.updateTime.bind(this), 10000);
         }
 
