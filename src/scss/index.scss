@@ -1,6 +1,8 @@
 $fontName: "Lato";
 $backgroundColor: #363636;
+$shapeBackgroundColor: #525252;
 $shapeColor: #3a5b83;
+$black: #000000;
 
 @font-face
 {
@@ -22,7 +24,26 @@ $shapeColor: #3a5b83;
 	color: $shapeColor;
 }
 
-.clock
+#main-clock
 {
     font-size: 800%;
 }
+
+#main-searchInput
+{
+	transition: background-color 200ms, border 200ms, color 200ms;
+	padding: 6px;
+	background-color: $backgroundColor;
+	border: 2px solid $shapeColor;
+	color: $shapeColor;
+}
+
+#main-searchInput:focus
+{
+	background-color: $shapeBackgroundColor;
+	border: 2px solid $shapeBackgroundColor;
+	color: $black;
+}
+
+@import "bootstrap-override.scss";
+@import "cover.scss";

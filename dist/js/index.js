@@ -39,14 +39,13 @@ var QuickSearch;
     }());
     QuickSearch.Clock = Clock;
 })(QuickSearch || (QuickSearch = {}));
-"use strict";
 var QuickSearch;
 (function (QuickSearch) {
     var Index = (function () {
         function Index() {
         }
         Index.main = function () {
-            var clock = new Clock1("main-clock");
+            var clock = new QuickSearch.Clock("main-clock");
             clock.initInterval();
         };
         return Index;
