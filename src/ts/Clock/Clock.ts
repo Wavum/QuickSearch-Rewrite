@@ -14,20 +14,6 @@ namespace QuickSearch
 
 
 
-        public set Seperator(value: string)
-        {
-            this.separator = value;
-
-            this.updateTime();
-        }
-
-        public set Color(value: string)
-        {
-            this.clock.css("color", value);
-
-            this.updateTime();
-        }
-
         public initInterval(): void
         {
             this.updateTime();

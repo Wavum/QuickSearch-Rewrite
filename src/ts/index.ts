@@ -1,4 +1,5 @@
 /// <reference path="Clock/Clock.ts" />
+/// <reference path="Search/Search.ts" />
 
 namespace QuickSearch
 {

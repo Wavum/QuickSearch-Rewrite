@@ -6,22 +6,6 @@ var QuickSearch;
             this.separator = ":";
             this.clock = $("#" + clockID);
         }
-        Object.defineProperty(Clock.prototype, "Seperator", {
-            set: function (value) {
-                this.separator = value;
-                this.updateTime();
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Clock.prototype, "Color", {
-            set: function (value) {
-                this.clock.css("color", value);
-                this.updateTime();
-            },
-            enumerable: true,
-            configurable: true
-        });
         Clock.prototype.initInterval = function () {
             this.updateTime();
             setInterval(this.updateTime.bind(this), 10000);
@@ -38,6 +22,16 @@ var QuickSearch;
         return Clock;
     }());
     QuickSearch.Clock = Clock;
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
+    var Search = (function () {
+        function Search(searchID) {
+            this.searchInput = $("#" + searchID);
+        }
+        return Search;
+    }());
+    QuickSearch.Search = Search;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
