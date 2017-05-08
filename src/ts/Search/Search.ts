@@ -9,6 +9,7 @@ namespace QuickSearch
         public constructor(searchID: string)
         {
             this.searchInput = $("#" + searchID);
+            
         }
     }
 }
