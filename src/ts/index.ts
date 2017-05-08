@@ -10,6 +10,8 @@ namespace QuickSearch
             let clock = new Clock("main-clock");
             
             clock.initInterval();
+
+            let search = new Search("main-searchInput");
         }
     }
 
