@@ -2,6 +2,10 @@
   border-radius: 0px;
   font-weight: bold; }
 
+.col-center {
+  float: none;
+  margin: 0 auto; }
+
 html, body {
   height: 100%; }
 
@@ -92,6 +96,10 @@ html, body {
 .alert {
   border-radius: 0px;
   font-weight: bold; }
+
+.col-center {
+  float: none;
+  margin: 0 auto; }
 
 html, body {
   height: 100%; }
