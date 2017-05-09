@@ -27,6 +27,7 @@ namespace QuickSearch
                     break;
 
                 default:
+                
                     break;
             }
 
