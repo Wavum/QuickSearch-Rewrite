@@ -1,3 +1,4 @@
+/// <reference path="Utilities/Enums.ts" />
 /// <reference path="Clock/Clock.ts" />
 /// <reference path="Search/Search.ts" />
 
