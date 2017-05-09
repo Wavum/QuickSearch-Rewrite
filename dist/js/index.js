@@ -28,7 +28,13 @@ var QuickSearch;
     var Search = (function () {
         function Search(searchID) {
             this.searchInput = $("#" + searchID);
+            this.searchInput.keyup(this.keyPressed.bind(this));
         }
+        Search.prototype.keyPressed = function (ev) {
+            var originalEvent = ev.originalEvent;
+            var value = this.searchInput.val();
+            console.log(value);
+        };
         return Search;
     }());
     QuickSearch.Search = Search;
