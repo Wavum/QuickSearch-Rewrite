@@ -1,6 +1,6 @@
-namespace QuickSearch
+namespace QuickSearch.Search
 {
-    export class Search
+    export class SearchInput
     {
         private searchInput: JQuery;
 

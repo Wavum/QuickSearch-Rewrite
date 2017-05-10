@@ -129,26 +129,41 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Search = (function () {
-        function Search(searchID) {
-            this.searchInput = $("#" + searchID);
-            this.searchInput.keyup(this.keyPressed.bind(this));
-        }
-        Search.prototype.keyPressed = function (ev) {
-            var originalEvent = ev.originalEvent;
-            var value = this.searchInput.val();
-            switch (originalEvent.keyCode) {
-                case QuickSearch.KeyCodes.ENTER:
-                    console.log("enter");
-                    break;
-                default:
-                    break;
+    var Search;
+    (function (Search) {
+        var SearchInputHandler = (function () {
+            function SearchInputHandler() {
             }
-            console.log(value);
-        };
-        return Search;
-    }());
-    QuickSearch.Search = Search;
+            return SearchInputHandler;
+        }());
+        Search.SearchInputHandler = SearchInputHandler;
+    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
+    var Search;
+    (function (Search) {
+        var SearchInput = (function () {
+            function SearchInput(searchID) {
+                this.searchInput = $("#" + searchID);
+                this.searchInput.keyup(this.keyPressed.bind(this));
+            }
+            SearchInput.prototype.keyPressed = function (ev) {
+                var originalEvent = ev.originalEvent;
+                var value = this.searchInput.val();
+                switch (originalEvent.keyCode) {
+                    case QuickSearch.KeyCodes.ENTER:
+                        console.log("enter");
+                        break;
+                    default:
+                        break;
+                }
+                console.log(value);
+            };
+            return SearchInput;
+        }());
+        Search.SearchInput = SearchInput;
+    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
@@ -158,7 +173,7 @@ var QuickSearch;
         Main.main = function () {
             var clock = new QuickSearch.Clock("main-clock");
             clock.initInterval();
-            var search = new QuickSearch.Search("main-searchInput");
+            var search = new QuickSearch.Search.SearchInput("main-searchInput");
         };
         return Main;
     }());

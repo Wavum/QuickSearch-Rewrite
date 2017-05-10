@@ -8,7 +8,7 @@ namespace QuickSearch
             
             clock.initInterval();
 
-            let search = new Search("main-searchInput");
+            let search = new Search.SearchInput("main-searchInput");
         }
     }
 }
