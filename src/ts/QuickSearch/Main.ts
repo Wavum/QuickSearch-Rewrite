@@ -1,10 +1,6 @@
-/// <reference path="Utilities/Enums.ts" />
-/// <reference path="Clock/Clock.ts" />
-/// <reference path="Search/Search.ts" />
-
 namespace QuickSearch
 {
-    export class Index
+    export class Main
     {
         public static main(): void
         {
@@ -15,6 +11,4 @@ namespace QuickSearch
             let search = new Search("main-searchInput");
         }
     }
-
-    Index.main();
 }

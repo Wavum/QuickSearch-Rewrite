@@ -152,18 +152,18 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Index = (function () {
-        function Index() {
+    var Main = (function () {
+        function Main() {
         }
-        Index.main = function () {
+        Main.main = function () {
             var clock = new QuickSearch.Clock("main-clock");
             clock.initInterval();
             var search = new QuickSearch.Search("main-searchInput");
         };
-        return Index;
+        return Main;
     }());
-    QuickSearch.Index = Index;
-    Index.main();
+    QuickSearch.Main = Main;
 })(QuickSearch || (QuickSearch = {}));
+QuickSearch.Main.main();
 
 //# sourceMappingURL=index.js.map
