@@ -1,4 +1,4 @@
-namespace QuickSearch
+namespace QuickSearch.Utilities
 {
     export enum KeyCodes
     {

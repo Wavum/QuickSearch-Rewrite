@@ -2,7 +2,9 @@ namespace QuickSearch.Search
 {
     export class SearchInput
     {
+        private inputHandler: SearchInputHandler = new SearchInputHandler();
         private searchInput: JQuery;
+        private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 
 
 
@@ -22,8 +24,8 @@ namespace QuickSearch.Search
             
             switch (originalEvent.keyCode)
             {
-                case KeyCodes.ENTER:
-                    console.log("enter");
+                case this.keyCodes.ENTER:
+                    this.inputHandler.openSite(value.trim());
                     break;
 
                 default:
