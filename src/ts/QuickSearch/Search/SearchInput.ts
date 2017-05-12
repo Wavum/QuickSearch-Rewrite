@@ -2,7 +2,7 @@ namespace QuickSearch.Search
 {
     export class SearchInput
     {
-        private inputHandler: SearchInputHandler = new SearchInputHandler();
+        private inputHandler: SearchInputHandler = new SearchInputHandler("");
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 
@@ -31,8 +31,6 @@ namespace QuickSearch.Search
                 default:
                     break;
             }
-
-            console.log(value);
         }
     }
 }

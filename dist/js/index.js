@@ -108,6 +108,22 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
+    var Utilities;
+    (function (Utilities) {
+        var Validation = (function () {
+            function Validation() {
+            }
+            Validation.isFQDN = function (url) {
+                var regex = new RegExp(/^([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)$/gmi);
+                return regex.test(url);
+            };
+            return Validation;
+        }());
+        Utilities.Validation = Validation;
+    })(Utilities = QuickSearch.Utilities || (QuickSearch.Utilities = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
     var Clock = (function () {
         function Clock(clockID) {
             this.separator = ":";
@@ -135,20 +151,22 @@ var QuickSearch;
     var Search;
     (function (Search) {
         var SearchInputHandler = (function () {
-            function SearchInputHandler() {
+            function SearchInputHandler(homepage) {
+                this.homepage = homepage;
             }
             SearchInputHandler.prototype.workInput = function (text) {
             };
             SearchInputHandler.prototype.openSite = function (text) {
                 if (QuickSearch.Utilities.Validation.isFQDN(text)) {
-                    {
+                    if (!text.startsWith("http")) {
                         window.open("http://" + text, "_self");
                     }
-                    {
+                    else {
                         window.open(text, "_self");
                     }
                     return;
                 }
+                window.open(this.homepage + encodeURIComponent(text), "_self");
             };
             return SearchInputHandler;
         }());
@@ -161,7 +179,7 @@ var QuickSearch;
     (function (Search) {
         var SearchInput = (function () {
             function SearchInput(searchID) {
-                this.inputHandler = new Search.SearchInputHandler();
+                this.inputHandler = new Search.SearchInputHandler("");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
@@ -176,7 +194,6 @@ var QuickSearch;
                     default:
                         break;
                 }
-                console.log(value);
             };
             return SearchInput;
         }());
@@ -198,21 +215,22 @@ var QuickSearch;
     QuickSearch.Main = Main;
 })(QuickSearch || (QuickSearch = {}));
 QuickSearch.Main.main();
-var QuickSearch;
-(function (QuickSearch) {
-    var Utilities;
-    (function (Utilities) {
-        var Validation = (function () {
-            function Validation() {
-            }
-            Validation.isFQDN = function (url) {
-                var regex = new RegExp(/^([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)$/gmi);
-                return regex.test(url);
-            };
-            return Validation;
-        }());
-        Utilities.Validation = Validation;
-    })(Utilities = QuickSearch.Utilities || (QuickSearch.Utilities = {}));
-})(QuickSearch || (QuickSearch = {}));
+String.prototype.startsWith = function startsWith(value) {
+    return this.lastIndexOf(value, 0) === 0;
+};
+String.prototype.startsWithAny = function startsWithAny(values) {
+    for (var i = 0; i < values.length; i++) {
+        if (this.startsWith(values[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+String.prototype.isEmpty = function isEmpty() {
+    return (this.length === 0 || !this.trim());
+};
+String.prototype.upperFirstChar = function upperFirstChar() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 //# sourceMappingURL=index.js.map
