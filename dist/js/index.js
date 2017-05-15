@@ -124,6 +124,91 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
+    var Config = (function () {
+        function Config() {
+            this.useSearchSuggestions = true;
+            this.numberOfSearchSuggestions = 4;
+            this.homepage = "https://start.duckduckgo.com/?q={0}";
+            this.quickSearchPattern = "{0} ";
+            this.clockSeperator = ":";
+            this.shapeColor = "#3a5b83";
+            this.quickSearches = [{ key: "d", site: "https://start.duckduckgo.com/?q={0}" },
+                { key: "s", site: "https://startpage.com/do/search?query={0}" },
+                { key: "g", site: "https://encrypted.google.com/#q={0}" },
+                { key: "y", site: "https://youtube.com/results?search_query={0}" },
+                { key: "r", site: "https://reddit.com/search?q={0}" },
+                { key: "sr", site: "https://reddit.com/r/{0}" },
+                { key: "sx", site: "https://stackexchange.com/search?q={0}" },
+                { key: "so", site: "https://stackoverflow.com/search?q={0}" },
+                { key: "gh", site: "https://github.com/search?q={0}" },
+                { key: "f", site: "https://www.facebook.com/public?query={0}" },
+                { key: "dict", site: "http://www.dict.cc/?s={0}" }];
+        }
+        Config.prototype.parseJSON = function (json) {
+            var parsedConfig = JSON.parse(json);
+            this.useSearchSuggestions = parsedConfig.useSearchSuggestions;
+            this.numberOfSearchSuggestions = parsedConfig.numberOfSearchSuggestions;
+            this.homepage = parsedConfig.homepage;
+            this.quickSearchPattern = parsedConfig.quickSearchPattern;
+            this.clockSeperator = parsedConfig.clockSeperator;
+            this.shapeColor = parsedConfig.shapeColor;
+            this.quickSearches = parsedConfig.quickSearches;
+        };
+        Object.defineProperty(Config.prototype, "UseSearchSuggestions", {
+            get: function () {
+                return this.useSearchSuggestions;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "NumberOfSearchSuggestions", {
+            get: function () {
+                return this.numberOfSearchSuggestions;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "Homepage", {
+            get: function () {
+                return this.homepage;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "QuickSearchPattern", {
+            get: function () {
+                return this.quickSearchPattern;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "ClockSeperator", {
+            get: function () {
+                return this.clockSeperator;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "ShapeColor", {
+            get: function () {
+                return this.shapeColor;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Config.prototype, "QuickSearches", {
+            get: function () {
+                return this.quickSearches;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Config;
+    }());
+    QuickSearch.Config = Config;
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
     var Clock = (function () {
         function Clock(clockID) {
             this.separator = ":";
