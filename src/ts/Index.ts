@@ -1,3 +1,4 @@
+/// <reference path="QuickSearch/Extensions/String.ts" />
 /// <reference path="QuickSearch/Utilities/Enums.ts" />
 /// <reference path="QuickSearch/Utilities/Validation.ts" />
 /// <reference path="QuickSearch/Config.ts" />
