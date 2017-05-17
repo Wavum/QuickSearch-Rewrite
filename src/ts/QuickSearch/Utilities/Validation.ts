@@ -15,5 +15,12 @@ namespace QuickSearch.Utilities
 
             return regex.test(url);
         }
+
+        public static isIPAddress(ipAdress: string): boolean
+        {
+            let regex: RegExp = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/gmi);
+
+            return regex.test(ipAdress);
+        }
     }
 }

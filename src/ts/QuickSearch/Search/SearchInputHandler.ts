@@ -21,7 +21,7 @@ namespace QuickSearch.Search
         public openSite(text: string): void
         {
             //Test for link
-            if (Utilities.Validation.isFQDN(text))
+            if (Utilities.Validation.isFQDN(text) || Utilities.Validation.isIPAddress(text))
             {
                 if (!text.startsWith("http"))
                 {
