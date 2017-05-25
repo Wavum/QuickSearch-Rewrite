@@ -2,7 +2,7 @@ namespace QuickSearch.Search
 {
     export class SearchInput
     {
-        private inputHandler: SearchInputHandler = new SearchInputHandler("");
+        private inputHandler: SearchInputHandler = new SearchInputHandler("https://start.duckduckgo.com/?q={0}");
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 

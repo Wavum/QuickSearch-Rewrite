@@ -285,7 +285,7 @@ var QuickSearch;
     (function (Search) {
         var SearchInput = (function () {
             function SearchInput(searchID) {
-                this.inputHandler = new Search.SearchInputHandler("");
+                this.inputHandler = new Search.SearchInputHandler("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
