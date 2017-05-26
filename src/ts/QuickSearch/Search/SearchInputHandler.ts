@@ -36,7 +36,7 @@ namespace QuickSearch.Search
             }
 
             //Normal search
-            window.open(this.homepage + encodeURIComponent(text), "_self");
+            window.open(this.homepage.format(encodeURIComponent(text)), "_self");
         }
     }
 }

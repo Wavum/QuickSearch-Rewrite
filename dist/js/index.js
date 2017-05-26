@@ -1,8 +1,26 @@
 "use strict";
+String.prototype.isEmpty = function isEmpty() {
+    return (this.length === 0 || !this.trim());
+};
+String.prototype.format = function format() {
+    var values = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        values[_i] = arguments[_i];
+    }
+    var formatted = this;
+    for (var i = 0; i < values.length; i++) {
+        formatted = formatted.replaceAll("{" + i + "}", values[i]);
+    }
+    return formatted;
+};
 String.prototype.startsWith = function startsWith(value) {
     return this.lastIndexOf(value, 0) === 0;
 };
-String.prototype.startsWithAny = function startsWithAny(values) {
+String.prototype.startsWithAny = function startsWithAny() {
+    var values = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        values[_i] = arguments[_i];
+    }
     for (var i = 0; i < values.length; i++) {
         if (this.startsWith(values[i])) {
             return true;
@@ -10,8 +28,9 @@ String.prototype.startsWithAny = function startsWithAny(values) {
     }
     return false;
 };
-String.prototype.isEmpty = function isEmpty() {
-    return (this.length === 0 || !this.trim());
+String.prototype.replaceAll = function replaceAll(searchValue, replaceValue) {
+    var text = this;
+    return text.split(searchValue).join(replaceValue);
 };
 String.prototype.upperFirstChar = function upperFirstChar() {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -272,7 +291,7 @@ var QuickSearch;
                     }
                     return;
                 }
-                window.open(this.homepage + encodeURIComponent(text), "_self");
+                window.open(this.homepage.format(encodeURIComponent(text)), "_self");
             };
             return SearchInputHandler;
         }());
