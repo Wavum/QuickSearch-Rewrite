@@ -154,7 +154,7 @@ var QuickSearch;
                 return regex.test(url);
             };
             Validation.isIPAddress = function (ipAdress) {
-                var regex = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/gmi);
+                var regex = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gmi);
                 return regex.test(ipAdress);
             };
             return Validation;
