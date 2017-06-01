@@ -2,11 +2,8 @@
 String.prototype.isEmpty = function isEmpty() {
     return (this.length === 0 || !this.trim());
 };
-String.prototype.format = function format() {
-    var values = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        values[_i] = arguments[_i];
-    }
+String.prototype.format = function format(valuesParm) {
+    var values = valuesParm;
     var formatted = this;
     for (var i = 0; i < values.length; i++) {
         formatted = formatted.replaceAll("{" + i + "}", values[i]);
@@ -16,11 +13,8 @@ String.prototype.format = function format() {
 String.prototype.startsWith = function startsWith(value) {
     return this.lastIndexOf(value, 0) === 0;
 };
-String.prototype.startsWithAny = function startsWithAny() {
-    var values = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        values[_i] = arguments[_i];
-    }
+String.prototype.startsWithAny = function startsWithAny(valuesParm) {
+    var values = valuesParm;
     for (var i = 0; i < values.length; i++) {
         if (this.startsWith(values[i])) {
             return true;
