@@ -21,7 +21,7 @@ namespace QuickSearch.Search
         {
             let originalEvent: KeyboardEvent = <KeyboardEvent>ev.originalEvent;
             let value: string = this.searchInput.val();
-            
+
             switch (originalEvent.keyCode)
             {
                 case this.keyCodes.ENTER:
