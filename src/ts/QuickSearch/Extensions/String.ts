@@ -24,7 +24,7 @@ String.prototype.format = function format(valuesParm: any): string
     {
         formatted = formatted.replaceAll("{" + i + "}", values[i]);
     }
-    
+
     return formatted;
 }
 
@@ -51,7 +51,7 @@ String.prototype.startsWithAny = function startsWithAny(valuesParm: any): boolea
 String.prototype.replaceAll = function replaceAll(searchValue: string, replaceValue: string): string
 {
     let text = <string>this;
-    
+
     return text.split(searchValue).join(replaceValue);
 }
 

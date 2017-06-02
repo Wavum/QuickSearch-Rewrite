@@ -18,9 +18,14 @@ namespace QuickSearch.Utilities
 
         public static isIPAddress(ipAdress: string): boolean
         {
-            let regex: RegExp = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gmi);
+            let regex: RegExp = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\b([/:][-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gmi);
 
             return regex.test(ipAdress);
+        }
+
+        public static isHTTPAddress(value: string): boolean
+        {
+            return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() == "localhost";
         }
     }
 }

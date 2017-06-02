@@ -148,8 +148,11 @@ var QuickSearch;
                 return regex.test(url);
             };
             Validation.isIPAddress = function (ipAdress) {
-                var regex = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gmi);
+                var regex = new RegExp(/^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\b([/:][-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gmi);
                 return regex.test(ipAdress);
+            };
+            Validation.isHTTPAddress = function (value) {
+                return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() == "localhost";
             };
             return Validation;
         }());
@@ -276,7 +279,7 @@ var QuickSearch;
             SearchInputHandler.prototype.workInput = function (text) {
             };
             SearchInputHandler.prototype.openSite = function (text) {
-                if (QuickSearch.Utilities.Validation.isFQDN(text) || QuickSearch.Utilities.Validation.isIPAddress(text)) {
+                if (QuickSearch.Utilities.Validation.isHTTPAddress(text)) {
                     if (!text.startsWith("http")) {
                         window.open("http://" + text, "_self");
                     }
