@@ -25,7 +25,6 @@ namespace QuickSearch.Search
             switch (originalEvent.keyCode)
             {
                 case this.keyCodes.ENTER:
-                    this.inputHandler.openSite(value.trim());
                     break;
 
                 default:

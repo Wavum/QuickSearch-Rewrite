@@ -2,13 +2,13 @@ namespace QuickSearch.Search
 {
     export class SearchInputHandler
     {
-        private homepage: string;
+        private homepage: Homepage;
 
 
 
         public constructor(homepage: string)
         {
-            this.homepage = homepage;
+            this.homepage = new Homepage(homepage);
         }
 
 
@@ -16,27 +16,6 @@ namespace QuickSearch.Search
         public workInput(text: string): void
         {
 
-        }
-
-        public openSite(text: string): void
-        {
-            //Test for link
-            if (Utilities.Validation.isHTTPAddress(text))
-            {
-                if (!text.startsWith("http"))
-                {
-                    window.open("http://" + text, "_self");
-                }
-                else
-                {
-                    window.open(text, "_self");
-                }
-
-                return;
-            }
-
-            //Normal search
-            window.open(this.homepage.format(encodeURIComponent(text)), "_self");
         }
     }
 }

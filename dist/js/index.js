@@ -272,23 +272,37 @@ var QuickSearch;
 (function (QuickSearch) {
     var Search;
     (function (Search) {
-        var SearchInputHandler = (function () {
-            function SearchInputHandler(homepage) {
+        var Homepage = (function () {
+            function Homepage(homepage) {
                 this.homepage = homepage;
             }
-            SearchInputHandler.prototype.workInput = function (text) {
-            };
-            SearchInputHandler.prototype.openSite = function (text) {
-                if (QuickSearch.Utilities.Validation.isHTTPAddress(text)) {
-                    if (!text.startsWith("http")) {
-                        window.open("http://" + text, "_self");
+            Homepage.prototype.openHomepage = function (value) {
+                if (value === void 0) { value = ""; }
+                if (QuickSearch.Utilities.Validation.isHTTPAddress(value)) {
+                    if (!value.startsWith("http")) {
+                        window.open("http://" + value, "_self");
                     }
                     else {
-                        window.open(text, "_self");
+                        window.open(value, "_self");
                     }
                     return;
                 }
-                window.open(this.homepage.format(encodeURIComponent(text)), "_self");
+                window.open(this.homepage.format(encodeURIComponent(value)), "_self");
+            };
+            return Homepage;
+        }());
+        Search.Homepage = Homepage;
+    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
+    var Search;
+    (function (Search) {
+        var SearchInputHandler = (function () {
+            function SearchInputHandler(homepage) {
+                this.homepage = new Search.Homepage(homepage);
+            }
+            SearchInputHandler.prototype.workInput = function (text) {
             };
             return SearchInputHandler;
         }());
@@ -311,7 +325,6 @@ var QuickSearch;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {
                     case this.keyCodes.ENTER:
-                        this.inputHandler.openSite(value.trim());
                         break;
                     default:
                         break;
