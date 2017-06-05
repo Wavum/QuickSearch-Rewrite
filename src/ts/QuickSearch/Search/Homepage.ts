@@ -13,7 +13,7 @@ namespace QuickSearch.Search
 
 
 
-        public openHomepage(value: string = ""): void
+        public openSite(value: string = ""): void
         {
             //Test for link
             if (Utilities.Validation.isHTTPAddress(value))

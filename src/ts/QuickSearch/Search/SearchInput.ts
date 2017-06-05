@@ -2,7 +2,8 @@ namespace QuickSearch.Search
 {
     export class SearchInput
     {
-        private inputHandler: SearchInputHandler = new SearchInputHandler("https://start.duckduckgo.com/?q={0}");
+        private inputHandler: SearchInputHandler = new SearchInputHandler();
+        private homepage: Homepage = new Homepage("https://start.duckduckgo.com/?q={0}");
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 
@@ -25,9 +26,11 @@ namespace QuickSearch.Search
             switch (originalEvent.keyCode)
             {
                 case this.keyCodes.ENTER:
+                    this.homepage.openSite(value);
                     break;
 
                 default:
+                    this.inputHandler.workInput(value);
                     break;
             }
         }

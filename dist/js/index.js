@@ -276,7 +276,7 @@ var QuickSearch;
             function Homepage(homepage) {
                 this.homepage = homepage;
             }
-            Homepage.prototype.openHomepage = function (value) {
+            Homepage.prototype.openSite = function (value) {
                 if (value === void 0) { value = ""; }
                 if (QuickSearch.Utilities.Validation.isHTTPAddress(value)) {
                     if (!value.startsWith("http")) {
@@ -299,8 +299,7 @@ var QuickSearch;
     var Search;
     (function (Search) {
         var SearchInputHandler = (function () {
-            function SearchInputHandler(homepage) {
-                this.homepage = new Search.Homepage(homepage);
+            function SearchInputHandler() {
             }
             SearchInputHandler.prototype.workInput = function (text) {
             };
@@ -315,7 +314,8 @@ var QuickSearch;
     (function (Search) {
         var SearchInput = (function () {
             function SearchInput(searchID) {
-                this.inputHandler = new Search.SearchInputHandler("https://start.duckduckgo.com/?q={0}");
+                this.inputHandler = new Search.SearchInputHandler();
+                this.homepage = new Search.Homepage("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
@@ -325,8 +325,10 @@ var QuickSearch;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {
                     case this.keyCodes.ENTER:
+                        this.homepage.openSite(value);
                         break;
                     default:
+                        this.inputHandler.workInput(value);
                         break;
                 }
             };

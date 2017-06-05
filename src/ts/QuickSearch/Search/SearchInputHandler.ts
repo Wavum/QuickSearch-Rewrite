@@ -2,13 +2,9 @@ namespace QuickSearch.Search
 {
     export class SearchInputHandler
     {
-        private homepage: Homepage;
-
-
-
-        public constructor(homepage: string)
+        public constructor()
         {
-            this.homepage = new Homepage(homepage);
+
         }
 
 
