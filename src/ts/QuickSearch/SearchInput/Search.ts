@@ -2,7 +2,7 @@ namespace QuickSearch.SearchInput
 {
     export class Search
     {
-        private inputHandler: SearchSuggestions = new SearchSuggestions();
+        private searchSuggestions: SearchSuggestions = new SearchSuggestions("main-searchSuggestions");
         private homepage: Homepage = new Homepage("https://start.duckduckgo.com/?q={0}");
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
@@ -41,7 +41,7 @@ namespace QuickSearch.SearchInput
                     break;
 
                 default:
-                    this.inputHandler.workInput(value);
+                    this.searchSuggestions.showSuggestions(value);
                     break;
             }
         }

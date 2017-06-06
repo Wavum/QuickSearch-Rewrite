@@ -161,6 +161,34 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
+    var Data;
+    (function (Data) {
+        var GoogleData = (function () {
+            function GoogleData() {
+            }
+            GoogleData.getSearchSuggestions = function (value, callback) {
+                var id = "i" + Math.random().toString(36).slice(2);
+                var executionTime = $.now();
+                GoogleData.getSearchSuggestions[id] = function (data) {
+                    data.executionTime = executionTime;
+                    callback(data);
+                    delete GoogleData.getSearchSuggestions[id];
+                    var script = document.getElementById("searchSuggestionsQuery" + id);
+                    if (script !== null)
+                        script.remove();
+                };
+                var script = new HTMLScriptElement();
+                script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=GoogleData.getSearchSuggestions." + id;
+                script.id = "searchSuggestionsQuery" + id;
+                document.head.appendChild(script);
+            };
+            return GoogleData;
+        }());
+        Data.GoogleData = GoogleData;
+    })(Data = QuickSearch.Data || (QuickSearch.Data = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
     var Config = (function () {
         function Config() {
             this.useSearchSuggestions = true;
@@ -302,9 +330,68 @@ var QuickSearch;
     var SearchInput;
     (function (SearchInput) {
         var SearchSuggestions = (function () {
-            function SearchSuggestions() {
+            function SearchSuggestions(parentID) {
+                this.searchSuggestionsDiv = jQuery("<div>");
+                this.maxResults = 4;
+                this.parentDiv = $("#" + parentID);
+                this.searchSuggestionsDiv.className = "searchSuggestionsDiv";
+                this.searchSuggestionsDiv.onmouseout = this.resetSelectedButton.bind(this);
+                this.parentDiv.add(this.searchSuggestionsDiv);
+                document.onClickOutside(this.searchSuggestionsDiv, this.hideSearchSuggestions.bind(this));
             }
-            SearchSuggestions.prototype.workInput = function (text) {
+            SearchSuggestions.prototype.showSuggestions = function (text) {
+                this.inputValue = text;
+                this.resetSelectedButton();
+                if (!text.isEmpty()) {
+                    QuickSearch.Data.GoogleData.getSearchSuggestions(text, function (data) {
+                        if (this.currentSearchSuggestionsData === null) {
+                            this.currentSearchSuggestionsData = data;
+                        }
+                        if (this.currentSearchSuggestionsData.executionTime <= data.executionTime && !this.inputValue.isEmpty()) {
+                            this.currentSearchSuggestionsData = data;
+                            this.createSearchSuggestions(data[1]);
+                        }
+                    }.bind(this));
+                }
+                else {
+                    this.hideSearchSuggestions();
+                }
+            };
+            SearchSuggestions.prototype.hideSearchSuggestions = function () {
+            };
+            SearchSuggestions.prototype.resetSelectedButton = function () {
+                if (this.selectedButton !== null) {
+                    var searchSuggestionButtons = this.searchSuggestionsDiv.children;
+                    if (searchSuggestionButtons !== undefined && this.selectedButton <= searchSuggestionButtons.length - 1) {
+                        var searchSuggestionButton = searchSuggestionButtons.item(this.selectedButton);
+                        searchSuggestionButton.style.background = this.backgroundColor;
+                        searchSuggestionButton.style.color = this.fontColor;
+                    }
+                    this.selectedButton = null;
+                }
+            };
+            SearchSuggestions.prototype.createSearchSuggestions = function (data) {
+                if (data !== null) {
+                    var results = data;
+                    this.searchSuggestionsDiv.innerHTML = "";
+                    if (results instanceof Array) {
+                        if (this.maxResults > results.length) {
+                            this.maxResults = results.length;
+                        }
+                        for (var i = 0; i < this.maxResults; i++) {
+                            this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results[i]));
+                        }
+                    }
+                    else if (results != this.inputValue) {
+                        this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results));
+                    }
+                    else {
+                        this.searchSuggestionsDiv.innerHTML = "";
+                    }
+                }
+                else {
+                    this.searchSuggestionsDiv.innerHTML = "";
+                }
             };
             return SearchSuggestions;
         }());
@@ -317,7 +404,7 @@ var QuickSearch;
     (function (SearchInput) {
         var Search = (function () {
             function Search(searchID) {
-                this.inputHandler = new SearchInput.SearchSuggestions();
+                this.searchSuggestions = new SearchInput.SearchSuggestions("main-searchSuggestions");
                 this.homepage = new SearchInput.Homepage("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
@@ -339,7 +426,7 @@ var QuickSearch;
                     case this.keyCodes.ESCAPE:
                         break;
                     default:
-                        this.inputHandler.workInput(value);
+                        this.searchSuggestions.showSuggestions(value);
                         break;
                 }
             };
