@@ -1,6 +1,6 @@
-namespace QuickSearch.Search
+namespace QuickSearch.SearchInput
 {
-    export class SearchInputHandler
+    export class SearchSuggestions
     {
         public constructor()
         {

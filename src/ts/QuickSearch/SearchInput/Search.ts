@@ -1,8 +1,8 @@
-namespace QuickSearch.Search
+namespace QuickSearch.SearchInput
 {
-    export class SearchInput
+    export class Search
     {
-        private inputHandler: SearchInputHandler = new SearchInputHandler();
+        private inputHandler: SearchSuggestions = new SearchSuggestions();
         private homepage: Homepage = new Homepage("https://start.duckduckgo.com/?q={0}");
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
@@ -27,6 +27,17 @@ namespace QuickSearch.Search
             {
                 case this.keyCodes.ENTER:
                     this.homepage.openSite(value);
+                    break;
+
+                case this.keyCodes.PAGE_UP:
+                case this.keyCodes.UP_ARROW:
+                    break;
+
+                case this.keyCodes.PAGE_DOWN:
+                case this.keyCodes.DOWN_ARROW:
+                    break;
+
+                case this.keyCodes.ESCAPE:
                     break;
 
                 default:

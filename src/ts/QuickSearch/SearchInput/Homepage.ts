@@ -1,4 +1,4 @@
-namespace QuickSearch.Search
+namespace QuickSearch.SearchInput
 {
     export class Homepage
     {

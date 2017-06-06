@@ -1,4 +1,4 @@
-namespace QuickSearch
+namespace QuickSearch.ClockTime
 {
     export class Clock
     {

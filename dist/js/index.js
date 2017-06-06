@@ -246,32 +246,35 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Clock = (function () {
-        function Clock(clockID) {
-            this.separator = ":";
-            this.clock = $("#" + clockID);
-        }
-        Clock.prototype.initInterval = function () {
-            this.updateTime();
-            setInterval(this.updateTime.bind(this), 10000);
-        };
-        Clock.prototype.updateTime = function () {
-            var date = new Date();
-            var hours = this.format(date.getHours());
-            var minutes = this.format(date.getMinutes());
-            this.clock.text(hours + this.separator + minutes);
-        };
-        Clock.prototype.format = function (num) {
-            return ("0" + num.toString()).slice(-2);
-        };
-        return Clock;
-    }());
-    QuickSearch.Clock = Clock;
+    var ClockTime;
+    (function (ClockTime) {
+        var Clock = (function () {
+            function Clock(clockID) {
+                this.separator = ":";
+                this.clock = $("#" + clockID);
+            }
+            Clock.prototype.initInterval = function () {
+                this.updateTime();
+                setInterval(this.updateTime.bind(this), 10000);
+            };
+            Clock.prototype.updateTime = function () {
+                var date = new Date();
+                var hours = this.format(date.getHours());
+                var minutes = this.format(date.getMinutes());
+                this.clock.text(hours + this.separator + minutes);
+            };
+            Clock.prototype.format = function (num) {
+                return ("0" + num.toString()).slice(-2);
+            };
+            return Clock;
+        }());
+        ClockTime.Clock = Clock;
+    })(ClockTime = QuickSearch.ClockTime || (QuickSearch.ClockTime = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Search;
-    (function (Search) {
+    var SearchInput;
+    (function (SearchInput) {
         var Homepage = (function () {
             function Homepage(homepage) {
                 this.homepage = homepage;
@@ -291,51 +294,59 @@ var QuickSearch;
             };
             return Homepage;
         }());
-        Search.Homepage = Homepage;
-    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
+        SearchInput.Homepage = Homepage;
+    })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Search;
-    (function (Search) {
-        var SearchInputHandler = (function () {
-            function SearchInputHandler() {
+    var SearchInput;
+    (function (SearchInput) {
+        var SearchSuggestions = (function () {
+            function SearchSuggestions() {
             }
-            SearchInputHandler.prototype.workInput = function (text) {
+            SearchSuggestions.prototype.workInput = function (text) {
             };
-            return SearchInputHandler;
+            return SearchSuggestions;
         }());
-        Search.SearchInputHandler = SearchInputHandler;
-    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
+        SearchInput.SearchSuggestions = SearchSuggestions;
+    })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var Search;
-    (function (Search) {
-        var SearchInput = (function () {
-            function SearchInput(searchID) {
-                this.inputHandler = new Search.SearchInputHandler();
-                this.homepage = new Search.Homepage("https://start.duckduckgo.com/?q={0}");
+    var SearchInput;
+    (function (SearchInput) {
+        var Search = (function () {
+            function Search(searchID) {
+                this.inputHandler = new SearchInput.SearchSuggestions();
+                this.homepage = new SearchInput.Homepage("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
             }
-            SearchInput.prototype.keyPressed = function (ev) {
+            Search.prototype.keyPressed = function (ev) {
                 var originalEvent = ev.originalEvent;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {
                     case this.keyCodes.ENTER:
                         this.homepage.openSite(value);
                         break;
+                    case this.keyCodes.PAGE_UP:
+                    case this.keyCodes.UP_ARROW:
+                        break;
+                    case this.keyCodes.PAGE_DOWN:
+                    case this.keyCodes.DOWN_ARROW:
+                        break;
+                    case this.keyCodes.ESCAPE:
+                        break;
                     default:
                         this.inputHandler.workInput(value);
                         break;
                 }
             };
-            return SearchInput;
+            return Search;
         }());
-        Search.SearchInput = SearchInput;
-    })(Search = QuickSearch.Search || (QuickSearch.Search = {}));
+        SearchInput.Search = Search;
+    })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
@@ -343,9 +354,9 @@ var QuickSearch;
         function Main() {
         }
         Main.main = function () {
-            var clock = new QuickSearch.Clock("main-clock");
+            var clock = new QuickSearch.ClockTime.Clock("main-clock");
             clock.initInterval();
-            var search = new QuickSearch.Search.SearchInput("main-searchInput");
+            var search = new QuickSearch.SearchInput.Search("main-searchInput");
         };
         return Main;
     }());
