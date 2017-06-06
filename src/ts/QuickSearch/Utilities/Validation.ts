@@ -25,7 +25,7 @@ namespace QuickSearch.Utilities
 
         public static isHTTPAddress(value: string): boolean
         {
-            return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() == "localhost";
+            return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() === "localhost";
         }
     }
 }

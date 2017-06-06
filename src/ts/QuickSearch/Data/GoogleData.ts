@@ -1,13 +1,23 @@
 namespace QuickSearch.Data
 {
+    export interface GoogleDataSearchSuggestionsResult extends Array<any>
+    {
+        [0]: string;
+        [1]: { [index: number]: string };
+        [2]: { [index: number]: string };
+        [3]: { [index: number]: string };
+        [index: number]: any;
+        executionTime: number;
+    }
+
     export class GoogleData
     {
-        public static getSearchSuggestions(value: string, callback: Function): void
+        public static getSearchSuggestions(value: string, callback: (data: GoogleDataSearchSuggestionsResult) => any): void
         {
             let id: string = "i" + Math.random().toString(36).slice(2);
             let executionTime: number = $.now();
 
-            (<any>GoogleData.getSearchSuggestions)[id] = function(data: any)
+            (<any>GoogleData.getSearchSuggestions)[id] = function(data: GoogleDataSearchSuggestionsResult): void
             {
                 data.executionTime = executionTime;
 
@@ -20,9 +30,9 @@ namespace QuickSearch.Data
                     script.remove();
             };
 
-            let script: HTMLScriptElement = new HTMLScriptElement();
+            let script: HTMLScriptElement = document.createElement("script");
 
-            script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=GoogleData.getSearchSuggestions." + id;
+            script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=QuickSearch.Data.GoogleData.getSearchSuggestions." + id;
             script.id = "searchSuggestionsQuery" + id;
 
             document.head.appendChild(script);

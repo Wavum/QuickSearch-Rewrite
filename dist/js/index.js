@@ -29,6 +29,16 @@ String.prototype.replaceAll = function replaceAll(searchValue, replaceValue) {
 String.prototype.upperFirstChar = function upperFirstChar() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
+(function ($) {
+    $.fn.clickOutside = function (callback) {
+        $(document).mouseup(function (ev) {
+            if (!this.is(ev.target) && !this.has(ev.target)) {
+                callback();
+            }
+        }.bind(this));
+        return this;
+    };
+}(jQuery));
 var QuickSearch;
 (function (QuickSearch) {
     var Utilities;
@@ -152,7 +162,7 @@ var QuickSearch;
                 return regex.test(ipAdress);
             };
             Validation.isHTTPAddress = function (value) {
-                return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() == "localhost";
+                return this.isFQDN(value) || this.isIPAddress(value) || value.trim().toLowerCase() === "localhost";
             };
             return Validation;
         }());
@@ -177,8 +187,8 @@ var QuickSearch;
                     if (script !== null)
                         script.remove();
                 };
-                var script = new HTMLScriptElement();
-                script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=GoogleData.getSearchSuggestions." + id;
+                var script = document.createElement("script");
+                script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=QuickSearch.Data.GoogleData.getSearchSuggestions." + id;
                 script.id = "searchSuggestionsQuery" + id;
                 document.head.appendChild(script);
             };
@@ -331,17 +341,19 @@ var QuickSearch;
     (function (SearchInput) {
         var SearchSuggestions = (function () {
             function SearchSuggestions(parentID) {
-                this.searchSuggestionsDiv = jQuery("<div>");
+                this.backgroundColor = "#757575";
+                this.backgroundColorFocus = "#3a5b83";
+                this.fontColor = "#000000";
+                this.fontColorFocus = "#FFFFFF";
+                this.selectedSuggestion = null;
                 this.maxResults = 4;
-                this.parentDiv = $("#" + parentID);
-                this.searchSuggestionsDiv.className = "searchSuggestionsDiv";
-                this.searchSuggestionsDiv.onmouseout = this.resetSelectedButton.bind(this);
-                this.parentDiv.add(this.searchSuggestionsDiv);
-                document.onClickOutside(this.searchSuggestionsDiv, this.hideSearchSuggestions.bind(this));
+                this.searchSuggestionsDiv = $("#" + parentID);
+                this.searchSuggestionsDiv.mouseout(this.resetSelectedSuggestion.bind(this));
+                this.searchSuggestionsDiv.clickOutside(this.hideSearchSuggestions.bind(this));
             }
             SearchSuggestions.prototype.showSuggestions = function (text) {
                 this.inputValue = text;
-                this.resetSelectedButton();
+                this.resetSelectedSuggestion();
                 if (!text.isEmpty()) {
                     QuickSearch.Data.GoogleData.getSearchSuggestions(text, function (data) {
                         if (this.currentSearchSuggestionsData === null) {
@@ -359,31 +371,26 @@ var QuickSearch;
             };
             SearchSuggestions.prototype.hideSearchSuggestions = function () {
             };
-            SearchSuggestions.prototype.resetSelectedButton = function () {
-                if (this.selectedButton !== null) {
-                    var searchSuggestionButtons = this.searchSuggestionsDiv.children;
-                    if (searchSuggestionButtons !== undefined && this.selectedButton <= searchSuggestionButtons.length - 1) {
-                        var searchSuggestionButton = searchSuggestionButtons.item(this.selectedButton);
-                        searchSuggestionButton.style.background = this.backgroundColor;
-                        searchSuggestionButton.style.color = this.fontColor;
+            SearchSuggestions.prototype.resetSelectedSuggestion = function () {
+                if (this.selectedSuggestion !== null) {
+                    var searchSuggestionButtons = this.searchSuggestionsDiv.children();
+                    if (searchSuggestionButtons !== undefined && this.selectedSuggestion <= searchSuggestionButtons.length - 1) {
+                        searchSuggestionButtons.css("background-color", this.backgroundColor);
+                        searchSuggestionButtons.css("color", this.fontColor);
                     }
-                    this.selectedButton = null;
+                    this.selectedSuggestion = null;
                 }
             };
             SearchSuggestions.prototype.createSearchSuggestions = function (data) {
                 if (data !== null) {
                     var results = data;
                     this.searchSuggestionsDiv.innerHTML = "";
-                    if (results instanceof Array) {
+                    if (results !== null) {
                         if (this.maxResults > results.length) {
                             this.maxResults = results.length;
                         }
                         for (var i = 0; i < this.maxResults; i++) {
-                            this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results[i]));
                         }
-                    }
-                    else if (results != this.inputValue) {
-                        this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results));
                     }
                     else {
                         this.searchSuggestionsDiv.innerHTML = "";
@@ -449,6 +456,7 @@ var QuickSearch;
     }());
     QuickSearch.Main = Main;
 })(QuickSearch || (QuickSearch = {}));
+QuickSearch.Data.GoogleData.getSearchSuggestions("testosterone pills gnc side effects ", function () { });
 QuickSearch.Main.main();
 
 //# sourceMappingURL=index.js.map

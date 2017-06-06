@@ -2,24 +2,24 @@ namespace QuickSearch.SearchInput
 {
     export class SearchSuggestions
     {
-        private parentDiv: JQuery;
-        private searchSuggestionsDiv: JQuery = jQuery("<div>");
+        private searchSuggestionsDiv: JQuery;
         private currentSearchSuggestionsData: any;
         private inputValue: string;
+        private backgroundColor: string = "#757575";
+        private backgroundColorFocus: string = "#3a5b83";
+        private fontColor: string = "#000000";
+        private fontColorFocus: string = "#FFFFFF";
+        private selectedSuggestion: number | null = null;
         private maxResults: number = 4;
 
 
 
         public constructor(parentID: string)
         {
-            this.parentDiv = $("#" + parentID);
+            this.searchSuggestionsDiv = $("#" + parentID);
 
-            this.searchSuggestionsDiv.className = "searchSuggestionsDiv";
-            this.searchSuggestionsDiv.onmouseout = this.resetSelectedButton.bind(this);
-
-            this.parentDiv.add(this.searchSuggestionsDiv);
-
-            document.onClickOutside(this.searchSuggestionsDiv, this.hideSearchSuggestions.bind(this));
+            this.searchSuggestionsDiv.mouseout(this.resetSelectedSuggestion.bind(this));
+            this.searchSuggestionsDiv.clickOutside(this.hideSearchSuggestions.bind(this));
         }
 
 
@@ -28,7 +28,7 @@ namespace QuickSearch.SearchInput
         {
             this.inputValue = text;
 
-            this.resetSelectedButton();
+            this.resetSelectedSuggestion();
 
             if (!text.isEmpty())
             {
@@ -60,34 +60,32 @@ namespace QuickSearch.SearchInput
 
 
 
-        private resetSelectedButton(): void
+        private resetSelectedSuggestion(): void
         {
-            if (this.selectedButton !== null)
+            if (this.selectedSuggestion !== null)
             {
-                let searchSuggestionButtons: HTMLCollection = this.searchSuggestionsDiv.children;
+                let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
 
-                if (searchSuggestionButtons !== undefined && this.selectedButton <= searchSuggestionButtons.length - 1)
+                if (searchSuggestionButtons !== undefined && this.selectedSuggestion <= searchSuggestionButtons.length - 1)
                 {
-                    let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons.item(this.selectedButton);
-
-                    searchSuggestionButton.style.background = this.backgroundColor;
-                    searchSuggestionButton.style.color = this.fontColor;
+                    searchSuggestionButtons.css("background-color", this.backgroundColor);
+                    searchSuggestionButtons.css("color", this.fontColor);
                 }
 
-                this.selectedButton = null;
+                this.selectedSuggestion = null;
             }
         }
 
-        private createSearchSuggestions(data: any): void
+        private createSearchSuggestions(data: Data.GoogleDataSearchSuggestionsResult): void
         {
             //Check for no result
             if (data !== null)
             {
-                let results: any = data;
+                let results: Data.GoogleDataSearchSuggestionsResult = data;
 
                 this.searchSuggestionsDiv.innerHTML = "";
 
-                if (results instanceof Array)
+                if (results !== null)
                 {
                     //Set max results
                     if (this.maxResults > results.length)
@@ -99,10 +97,6 @@ namespace QuickSearch.SearchInput
                     {
                         this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results[i]));
                     }
-                }
-                else if (results != this.inputValue)
-                {
-                    this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results));
                 }
                 else
                 {
