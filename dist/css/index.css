@@ -73,6 +73,9 @@ html, body {
   font-weight: normal;
   font-style: normal; }
 
+*:focus {
+  outline: none; }
+
 .qs {
   font-family: "Lato";
   background-color: #363636;
@@ -81,17 +84,34 @@ html, body {
 #main-clock {
   font-size: 800%; }
 
+#main-quickKey {
+  padding: 6px;
+  background-color: #525252;
+  border: 2px solid #525252;
+  color: #000000; }
+
 #main-searchInput {
   transition: background-color 200ms, border 200ms, color 200ms;
   padding: 6px;
   background-color: #363636;
   border: 2px solid #3a5b83;
-  color: #3a5b83; }
+  color: #3a5b83;
+  width: 100%; }
 
 #main-searchInput:focus {
   background-color: #525252;
   border: 2px solid #525252;
   color: #000000; }
+
+#main-searchSuggestions {
+  position: absolute;
+  width: 100%; }
+
+#main-searchSuggestions input {
+  padding: 6px 6px 6px 6px;
+  border: 2px solid transparent;
+  text-align: left;
+  width: 100%; }
 
 .alert {
   border-radius: 0px;

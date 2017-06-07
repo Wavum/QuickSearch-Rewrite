@@ -17,6 +17,11 @@ $black: #000000;
 	font-style: normal;
 }
 
+// Turn chromes blue border off
+*:focus {
+    outline: none;
+}
+
 .qs
 {
   	font-family: $fontName;
@@ -29,6 +34,14 @@ $black: #000000;
     font-size: 800%;
 }
 
+#main-quickKey
+{
+	padding: 6px;
+	background-color: $shapeBackgroundColor;
+	border: 2px solid $shapeBackgroundColor;
+	color: $black;
+}
+
 #main-searchInput
 {
 	transition: background-color 200ms, border 200ms, color 200ms;
@@ -36,6 +49,7 @@ $black: #000000;
 	background-color: $backgroundColor;
 	border: 2px solid $shapeColor;
 	color: $shapeColor;
+	width: 100%;
 }
 
 #main-searchInput:focus
@@ -43,6 +57,20 @@ $black: #000000;
 	background-color: $shapeBackgroundColor;
 	border: 2px solid $shapeBackgroundColor;
 	color: $black;
+}
+
+#main-searchSuggestions
+{
+	position: absolute;
+	width: 100%;
+}
+
+#main-searchSuggestions input
+{
+	padding: 6px 6px 6px 6px;
+	border: 2px solid transparent;
+	text-align: left;
+	width: 100%;
 }
 
 @import "bootstrap-override.scss";

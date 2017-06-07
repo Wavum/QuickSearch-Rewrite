@@ -356,7 +356,7 @@ var QuickSearch;
                 this.resetSelectedSuggestion();
                 if (!text.isEmpty()) {
                     QuickSearch.Data.GoogleData.getSearchSuggestions(text, function (data) {
-                        if (this.currentSearchSuggestionsData === null) {
+                        if (this.currentSearchSuggestionsData === undefined) {
                             this.currentSearchSuggestionsData = data;
                         }
                         if (this.currentSearchSuggestionsData.executionTime <= data.executionTime && !this.inputValue.isEmpty()) {
@@ -370,6 +370,28 @@ var QuickSearch;
                 }
             };
             SearchSuggestions.prototype.hideSearchSuggestions = function () {
+                this.searchSuggestionsDiv.html("");
+            };
+            SearchSuggestions.prototype.selectMouseOver = function (ev) {
+                var searchSuggestionButtons = this.searchSuggestionsDiv.children();
+                if (this.selectedSuggestion !== null) {
+                    var searchSuggestionButton = searchSuggestionButtons[this.selectedSuggestion];
+                    searchSuggestionButton.style.background = this.backgroundColor;
+                    searchSuggestionButton.style.color = this.fontColor;
+                }
+                for (var i = 0; i < searchSuggestionButtons.length; i++) {
+                    var searchSuggestionButton = searchSuggestionButtons[i];
+                    if (searchSuggestionButton.value === ev.target.value) {
+                        this.selectedSuggestion = i;
+                    }
+                }
+                if (this.selectedSuggestion !== null) {
+                    var searchSuggestionButton = searchSuggestionButtons[this.selectedSuggestion];
+                    searchSuggestionButton.style.background = this.backgroundColorFocus;
+                    searchSuggestionButton.style.color = this.fontColorFocus;
+                    return searchSuggestionButton.value;
+                }
+                return "";
             };
             SearchSuggestions.prototype.resetSelectedSuggestion = function () {
                 if (this.selectedSuggestion !== null) {
@@ -384,21 +406,34 @@ var QuickSearch;
             SearchSuggestions.prototype.createSearchSuggestions = function (data) {
                 if (data !== null) {
                     var results = data;
-                    this.searchSuggestionsDiv.innerHTML = "";
+                    this.searchSuggestionsDiv.html("");
                     if (results !== null) {
                         if (this.maxResults > results.length) {
                             this.maxResults = results.length;
                         }
                         for (var i = 0; i < this.maxResults; i++) {
+                            this.searchSuggestionsDiv.append(this.createSearchSuggestion(results[i]));
                         }
                     }
                     else {
-                        this.searchSuggestionsDiv.innerHTML = "";
+                        this.searchSuggestionsDiv.html("");
                     }
                 }
                 else {
-                    this.searchSuggestionsDiv.innerHTML = "";
+                    this.searchSuggestionsDiv.html("");
                 }
+            };
+            SearchSuggestions.prototype.createSearchSuggestion = function (value) {
+                var searchSuggestionButton = document.createElement("input");
+                searchSuggestionButton.type = "button";
+                searchSuggestionButton.value = value;
+                searchSuggestionButton.style.backgroundColor = this.backgroundColor;
+                searchSuggestionButton.style.color = this.fontColor;
+                searchSuggestionButton.onmouseover = this.selectMouseOver.bind(this);
+                searchSuggestionButton.onclick = this.mouseClicked.bind(this);
+                return searchSuggestionButton;
+            };
+            SearchSuggestions.prototype.mouseClicked = function (ev) {
             };
             return SearchSuggestions;
         }());
@@ -456,7 +491,6 @@ var QuickSearch;
     }());
     QuickSearch.Main = Main;
 })(QuickSearch || (QuickSearch = {}));
-QuickSearch.Data.GoogleData.getSearchSuggestions("testosterone pills gnc side effects ", function () { });
 QuickSearch.Main.main();
 
 //# sourceMappingURL=index.js.map

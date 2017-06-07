@@ -10,5 +10,4 @@
 /// <reference path="QuickSearch/SearchInput/Search.ts" />
 /// <reference path="QuickSearch/Main.ts" />
 
-QuickSearch.Data.GoogleData.getSearchSuggestions("testosterone pills gnc side effects ", function() { });
 QuickSearch.Main.main();

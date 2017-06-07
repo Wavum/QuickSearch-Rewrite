@@ -3,7 +3,7 @@ namespace QuickSearch.SearchInput
     export class SearchSuggestions
     {
         private searchSuggestionsDiv: JQuery;
-        private currentSearchSuggestionsData: any;
+        private currentSearchSuggestionsData: Data.GoogleDataSearchSuggestionsResult;
         private inputValue: string;
         private backgroundColor: string = "#757575";
         private backgroundColorFocus: string = "#3a5b83";
@@ -32,9 +32,9 @@ namespace QuickSearch.SearchInput
 
             if (!text.isEmpty())
             {
-                Data.GoogleData.getSearchSuggestions(text, function(data: any)
+                Data.GoogleData.getSearchSuggestions(text, function(data: Data.GoogleDataSearchSuggestionsResult)
                 {
-                    if (this.currentSearchSuggestionsData === null)
+                    if (this.currentSearchSuggestionsData === undefined)
                     {
                         this.currentSearchSuggestionsData = data;
                     }
@@ -55,10 +55,45 @@ namespace QuickSearch.SearchInput
 
         public hideSearchSuggestions(): void
         {
-
+            this.searchSuggestionsDiv.html("");
         }
 
 
+
+        private selectMouseOver(ev: MouseEvent): string
+        {
+            let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
+
+            if (this.selectedSuggestion !== null)
+            {
+                let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                searchSuggestionButton.style.background = this.backgroundColor;
+                searchSuggestionButton.style.color = this.fontColor;
+            }
+
+            for (var i = 0; i < searchSuggestionButtons.length; i++)
+            {
+                let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[i];
+
+                if (searchSuggestionButton.value === (<HTMLInputElement>ev.target).value)
+                {
+                    this.selectedSuggestion = i;
+                }
+            }
+
+            if (this.selectedSuggestion !== null)
+            {
+                let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                searchSuggestionButton.style.background = this.backgroundColorFocus;
+                searchSuggestionButton.style.color = this.fontColorFocus;
+
+                return searchSuggestionButton.value;
+            }
+
+            return "";
+        }
 
         private resetSelectedSuggestion(): void
         {
@@ -76,14 +111,14 @@ namespace QuickSearch.SearchInput
             }
         }
 
-        private createSearchSuggestions(data: Data.GoogleDataSearchSuggestionsResult): void
+        private createSearchSuggestions(data: Array<string>): void
         {
             //Check for no result
             if (data !== null)
             {
-                let results: Data.GoogleDataSearchSuggestionsResult = data;
+                let results: Array<string> = data;
 
-                this.searchSuggestionsDiv.innerHTML = "";
+                this.searchSuggestionsDiv.html("");
 
                 if (results !== null)
                 {
@@ -95,18 +130,37 @@ namespace QuickSearch.SearchInput
 
                     for (let i: number = 0; i < this.maxResults; i++)
                     {
-                        this.searchSuggestionsDiv.appendChild(this.createSearchSuggestion(results[i]));
+                        this.searchSuggestionsDiv.append(this.createSearchSuggestion(results[i]));
                     }
                 }
                 else
                 {
-                    this.searchSuggestionsDiv.innerHTML = "";
+                    this.searchSuggestionsDiv.html("");
                 }
             }
             else
             {
-                this.searchSuggestionsDiv.innerHTML = "";
+                this.searchSuggestionsDiv.html("");
             }
+        }
+
+        private createSearchSuggestion(value: string): HTMLInputElement
+        {
+            let searchSuggestionButton: HTMLInputElement = document.createElement("input");
+
+            searchSuggestionButton.type = "button";
+            searchSuggestionButton.value = value;
+            searchSuggestionButton.style.backgroundColor = this.backgroundColor;
+            searchSuggestionButton.style.color = this.fontColor;
+            searchSuggestionButton.onmouseover = this.selectMouseOver.bind(this);
+            searchSuggestionButton.onclick = this.mouseClicked.bind(this);
+
+            return searchSuggestionButton;
+        }
+
+        private mouseClicked(ev: MouseEvent): void
+        {
+            //this.onSuggestionClick.fire(ev.target);
         }
     }
 }
