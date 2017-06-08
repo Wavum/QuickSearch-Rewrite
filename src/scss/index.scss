@@ -3,6 +3,7 @@ $backgroundColor: #363636;
 $shapeBackgroundColor: #525252;
 $shapeColor: #3a5b83;
 $black: #000000;
+$white: #FFFFFF;
 
 @font-face
 {
@@ -37,9 +38,15 @@ $black: #000000;
 #main-quickKey
 {
 	padding: 6px;
-	background-color: $shapeBackgroundColor;
-	border: 2px solid $shapeBackgroundColor;
+	background-color: $shapeColor;
+	border: 2px solid $shapeColor;
 	color: $black;
+	display: flex;
+}
+
+#main-quickKeyRemove
+{
+	margin-left: 6px;
 }
 
 #main-searchInput
