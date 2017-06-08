@@ -5,8 +5,13 @@ String.prototype.isEmpty = function isEmpty() {
 String.prototype.format = function format(valuesParm) {
     var values = valuesParm;
     var formatted = this;
-    for (var i = 0; i < values.length; i++) {
-        formatted = formatted.replaceAll("{" + i + "}", values[i]);
+    if (values instanceof Array) {
+        for (var i = 0; i < values.length; i++) {
+            formatted = formatted.replaceAll("{" + i + "}", values[i]);
+        }
+    }
+    else {
+        formatted = formatted.replaceAll("{0}", values);
     }
     return formatted;
 };

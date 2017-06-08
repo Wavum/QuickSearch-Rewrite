@@ -20,9 +20,17 @@ String.prototype.format = function format(valuesParm: any): string
     let values: string[] = <string[]>valuesParm;
     let formatted = <string>this;
 
-    for(let i = 0; i < values.length; i++)
+    if (values instanceof Array)
     {
-        formatted = formatted.replaceAll("{" + i + "}", values[i]);
+        for(let i = 0; i < values.length; i++)
+        {
+            formatted = formatted.replaceAll("{" + i + "}", values[i]);
+        }
+    }
+    else
+    {
+        //Must be a normal string
+        formatted = formatted.replaceAll("{0}", values);
     }
 
     return formatted;
