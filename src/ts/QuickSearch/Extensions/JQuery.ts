@@ -9,7 +9,7 @@ interface JQuery
     {
         $(document).mouseup(function(ev: JQueryMouseEventObject)
         {
-            if (!this.is(ev.target) && !this.has(ev.target))
+            if (!this.is(ev.target) && this.has(ev.target).length === 0)
             {
                 callback();
             }

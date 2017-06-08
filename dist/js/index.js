@@ -32,7 +32,7 @@ String.prototype.upperFirstChar = function upperFirstChar() {
 (function ($) {
     $.fn.clickOutside = function (callback) {
         $(document).mouseup(function (ev) {
-            if (!this.is(ev.target) && !this.has(ev.target)) {
+            if (!this.is(ev.target) && this.has(ev.target).length === 0) {
                 callback();
             }
         }.bind(this));
