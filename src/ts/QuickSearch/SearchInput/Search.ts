@@ -14,6 +14,8 @@ namespace QuickSearch.SearchInput
             this.searchInput = $("#" + searchID);
 
             this.searchInput.keyup(this.keyPressed.bind(this));
+
+            this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
         }
 
 
@@ -31,19 +33,33 @@ namespace QuickSearch.SearchInput
 
                 case this.keyCodes.PAGE_UP:
                 case this.keyCodes.UP_ARROW:
+                    value = this.searchSuggestions.selectUpwards();
                     break;
 
                 case this.keyCodes.PAGE_DOWN:
                 case this.keyCodes.DOWN_ARROW:
+                    value = this.searchSuggestions.selectDownwards();
                     break;
 
                 case this.keyCodes.ESCAPE:
+                    this.searchSuggestions.hideSearchSuggestions();
                     break;
 
                 default:
                     this.searchSuggestions.showSuggestions(value);
                     break;
             }
+
+            this.searchInput.focus();
+            this.searchInput.val(value);
+        }
+
+        private searchSuggestionClicked(ev: MouseEvent): void
+        {
+            this.searchInput.val((<HTMLInputElement>ev.target).value);
+            this.searchInput.focus();
+
+            this.searchSuggestions.showSuggestions(this.searchInput.val());
         }
     }
 }

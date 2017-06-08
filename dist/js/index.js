@@ -372,6 +372,69 @@ var QuickSearch;
             SearchSuggestions.prototype.hideSearchSuggestions = function () {
                 this.searchSuggestionsDiv.html("");
             };
+            SearchSuggestions.prototype.selectDownwards = function () {
+                var searchSuggestionButtons = this.searchSuggestionsDiv.children();
+                if (searchSuggestionButtons.length !== 0) {
+                    if (this.selectedSuggestion === null) {
+                        this.selectedSuggestion = 0;
+                    }
+                    else {
+                        var searchSuggestionButton_1 = searchSuggestionButtons[this.selectedSuggestion];
+                        searchSuggestionButton_1.style.background = this.backgroundColor;
+                        searchSuggestionButton_1.style.color = this.fontColor;
+                        this.selectedSuggestion++;
+                        if (this.selectedSuggestion > searchSuggestionButtons.length - 1) {
+                            this.selectedSuggestion = null;
+                            return this.inputValue;
+                        }
+                    }
+                    var searchSuggestionButton = searchSuggestionButtons[this.selectedSuggestion];
+                    searchSuggestionButton.style.background = this.backgroundColorFocus;
+                    searchSuggestionButton.style.color = this.fontColorFocus;
+                    return searchSuggestionButton.value;
+                }
+                else if (this.inputValue === undefined) {
+                    return "";
+                }
+                else {
+                    return this.inputValue;
+                }
+            };
+            SearchSuggestions.prototype.selectUpwards = function () {
+                var searchSuggestionButtons = this.searchSuggestionsDiv.children();
+                if (searchSuggestionButtons.length != 0) {
+                    if (this.selectedSuggestion === null) {
+                        this.selectedSuggestion = searchSuggestionButtons.length - 1;
+                    }
+                    else {
+                        var searchSuggestionButton_2 = searchSuggestionButtons[this.selectedSuggestion];
+                        searchSuggestionButton_2.style.background = this.backgroundColor;
+                        searchSuggestionButton_2.style.color = this.fontColor;
+                        this.selectedSuggestion--;
+                        if (this.selectedSuggestion < 0) {
+                            this.selectedSuggestion = null;
+                            return this.inputValue;
+                        }
+                    }
+                    var searchSuggestionButton = searchSuggestionButtons[this.selectedSuggestion];
+                    searchSuggestionButton.style.background = this.backgroundColorFocus;
+                    searchSuggestionButton.style.color = this.fontColorFocus;
+                    return searchSuggestionButton.value;
+                }
+                else if (this.inputValue === null) {
+                    return "";
+                }
+                else {
+                    return this.inputValue;
+                }
+            };
+            Object.defineProperty(SearchSuggestions.prototype, "onclick", {
+                set: function (callback) {
+                    this.onClickCallback = callback;
+                },
+                enumerable: true,
+                configurable: true
+            });
             SearchSuggestions.prototype.selectMouseOver = function (ev) {
                 var searchSuggestionButtons = this.searchSuggestionsDiv.children();
                 if (this.selectedSuggestion !== null) {
@@ -430,10 +493,8 @@ var QuickSearch;
                 searchSuggestionButton.style.backgroundColor = this.backgroundColor;
                 searchSuggestionButton.style.color = this.fontColor;
                 searchSuggestionButton.onmouseover = this.selectMouseOver.bind(this);
-                searchSuggestionButton.onclick = this.mouseClicked.bind(this);
+                searchSuggestionButton.onclick = this.onClickCallback;
                 return searchSuggestionButton;
-            };
-            SearchSuggestions.prototype.mouseClicked = function (ev) {
             };
             return SearchSuggestions;
         }());
@@ -451,6 +512,7 @@ var QuickSearch;
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
+                this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
             }
             Search.prototype.keyPressed = function (ev) {
                 var originalEvent = ev.originalEvent;
@@ -461,16 +523,26 @@ var QuickSearch;
                         break;
                     case this.keyCodes.PAGE_UP:
                     case this.keyCodes.UP_ARROW:
+                        value = this.searchSuggestions.selectUpwards();
                         break;
                     case this.keyCodes.PAGE_DOWN:
                     case this.keyCodes.DOWN_ARROW:
+                        value = this.searchSuggestions.selectDownwards();
                         break;
                     case this.keyCodes.ESCAPE:
+                        this.searchSuggestions.hideSearchSuggestions();
                         break;
                     default:
                         this.searchSuggestions.showSuggestions(value);
                         break;
                 }
+                this.searchInput.focus();
+                this.searchInput.val(value);
+            };
+            Search.prototype.searchSuggestionClicked = function (ev) {
+                this.searchInput.val(ev.target.value);
+                this.searchInput.focus();
+                this.searchSuggestions.showSuggestions(this.searchInput.val());
             };
             return Search;
         }());

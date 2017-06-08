@@ -4,6 +4,7 @@ namespace QuickSearch.SearchInput
     {
         private searchSuggestionsDiv: JQuery;
         private currentSearchSuggestionsData: Data.GoogleDataSearchSuggestionsResult;
+        private onClickCallback: (ev: MouseEvent) => any;
         private inputValue: string;
         private backgroundColor: string = "#757575";
         private backgroundColorFocus: string = "#3a5b83";
@@ -56,6 +57,97 @@ namespace QuickSearch.SearchInput
         public hideSearchSuggestions(): void
         {
             this.searchSuggestionsDiv.html("");
+        }
+
+        public selectDownwards(): string
+        {
+            let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
+
+            if (searchSuggestionButtons.length !== 0)
+            {
+                if (this.selectedSuggestion === null)
+                {
+                    this.selectedSuggestion = 0;
+                }
+                else
+                {
+                    let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                    searchSuggestionButton.style.background = this.backgroundColor;
+                    searchSuggestionButton.style.color = this.fontColor;
+                    this.selectedSuggestion++;
+
+                    if (this.selectedSuggestion > searchSuggestionButtons.length - 1)
+                    {
+                        this.selectedSuggestion = null;
+
+                        return this.inputValue;
+                    }
+                }
+
+                let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                searchSuggestionButton.style.background = this.backgroundColorFocus;
+                searchSuggestionButton.style.color = this.fontColorFocus;
+
+                return searchSuggestionButton.value;
+            }
+            else if (this.inputValue === undefined)
+            {
+                return "";
+            }
+            else
+            {
+                return this.inputValue;
+            }
+        }
+
+        public selectUpwards(): string
+        {
+            let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
+
+            if (searchSuggestionButtons.length != 0)
+            {
+                if (this.selectedSuggestion === null)
+                {
+                    this.selectedSuggestion = searchSuggestionButtons.length - 1;
+                }
+                else
+                {
+                    let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                    searchSuggestionButton.style.background = this.backgroundColor;
+                    searchSuggestionButton.style.color = this.fontColor;
+                    this.selectedSuggestion--;
+
+                    if (this.selectedSuggestion < 0)
+                    {
+                        this.selectedSuggestion = null;
+
+                        return this.inputValue;
+                    }
+                }
+
+                let searchSuggestionButton: HTMLButtonElement = <HTMLButtonElement>searchSuggestionButtons[this.selectedSuggestion];
+
+                searchSuggestionButton.style.background = this.backgroundColorFocus;
+                searchSuggestionButton.style.color = this.fontColorFocus;
+
+                return searchSuggestionButton.value;
+            }
+            else if (this.inputValue === null)
+            {
+                return "";
+            }
+            else
+            {
+                return this.inputValue;
+            }
+        }
+
+        public set onclick(callback: (ev: MouseEvent) => any)
+        {
+            this.onClickCallback = callback;
         }
 
 
@@ -153,14 +245,9 @@ namespace QuickSearch.SearchInput
             searchSuggestionButton.style.backgroundColor = this.backgroundColor;
             searchSuggestionButton.style.color = this.fontColor;
             searchSuggestionButton.onmouseover = this.selectMouseOver.bind(this);
-            searchSuggestionButton.onclick = this.mouseClicked.bind(this);
+            searchSuggestionButton.onclick = this.onClickCallback;
 
             return searchSuggestionButton;
-        }
-
-        private mouseClicked(ev: MouseEvent): void
-        {
-            //this.onSuggestionClick.fire(ev.target);
         }
     }
 }
