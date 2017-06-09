@@ -20,6 +20,10 @@ namespace QuickSearch.SearchInput
 
 
 
+        /**
+         * Handles the input when a key is pressed
+         * @param ev Event parameter
+         */
         private keyPressed(ev: JQueryKeyEventObject): void
         {
             let originalEvent: KeyboardEvent = <KeyboardEvent>ev.originalEvent;
@@ -54,6 +58,10 @@ namespace QuickSearch.SearchInput
             this.searchInput.val(value);
         }
 
+        /**
+         * Handles the input value when a search suggestion is clicked
+         * @param ev Event parameter
+         */
         private searchSuggestionClicked(ev: MouseEvent): void
         {
             this.searchInput.val((<HTMLInputElement>ev.target).value);

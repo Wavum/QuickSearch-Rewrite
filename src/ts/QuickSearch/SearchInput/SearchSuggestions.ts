@@ -20,11 +20,15 @@ namespace QuickSearch.SearchInput
             this.searchSuggestionsDiv = $("#" + parentID);
 
             this.searchSuggestionsDiv.mouseout(this.resetSelectedSuggestion.bind(this));
-            this.searchSuggestionsDiv.clickOutside(this.hideSearchSuggestions.bind(this));
+            this.searchSuggestionsDiv.clickOutside(this.hideSuggestions.bind(this));
         }
 
 
 
+        /**
+         * Show search suggestions
+         * @param text Text for search suggestions
+         */
         public showSuggestions(text: string): void
         {
             this.inputValue = text;
@@ -50,15 +54,21 @@ namespace QuickSearch.SearchInput
             }
             else
             {
-                this.hideSearchSuggestions();
+                this.hideSuggestions();
             }
         }
 
-        public hideSearchSuggestions(): void
+        /**
+         * Hide search suggestions
+         */
+        public hideSuggestions(): void
         {
             this.searchSuggestionsDiv.html("");
         }
 
+        /**
+         * Selecets a suggestions downwards
+         */
         public selectDownwards(): string
         {
             let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
@@ -102,6 +112,9 @@ namespace QuickSearch.SearchInput
             }
         }
 
+        /**
+         * Selecets a suggestions upwards
+         */
         public selectUpwards(): string
         {
             let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
@@ -145,6 +158,9 @@ namespace QuickSearch.SearchInput
             }
         }
 
+        /**
+         * Sets a callback when a suggestions will be clicked
+         */
         public set onclick(callback: (ev: MouseEvent) => any)
         {
             this.onClickCallback = callback;
@@ -152,6 +168,10 @@ namespace QuickSearch.SearchInput
 
 
 
+        /**
+         * Changes the suggestions when the mouse hovers over it
+         * @param ev Event parameter
+         */
         private selectMouseOver(ev: MouseEvent): string
         {
             let searchSuggestionButtons: JQuery = this.searchSuggestionsDiv.children();
@@ -187,6 +207,9 @@ namespace QuickSearch.SearchInput
             return "";
         }
 
+        /**
+         * Resets the selected suggestions to it's normal state
+         */
         private resetSelectedSuggestion(): void
         {
             if (this.selectedSuggestion !== null)
@@ -203,6 +226,10 @@ namespace QuickSearch.SearchInput
             }
         }
 
+        /**
+         * Creats the suggestions
+         * @param data String-Array with suggestions
+         */
         private createSearchSuggestions(data: Array<string>): void
         {
             //Check for no result
@@ -236,6 +263,10 @@ namespace QuickSearch.SearchInput
             }
         }
 
+        /**
+         * Creates a single search suggestion
+         * @param value Value for the suggestion
+         */
         private createSearchSuggestion(value: string): HTMLInputElement
         {
             let searchSuggestionButton: HTMLInputElement = document.createElement("input");

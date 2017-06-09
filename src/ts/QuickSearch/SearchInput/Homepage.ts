@@ -13,6 +13,15 @@ namespace QuickSearch.SearchInput
 
 
 
+        /**
+         * Opens the homepage
+         */
+        public openSite(): void;
+        /**
+         * Opens the homepage, quick search site or a link
+         * @param value Value for search
+         */
+        public openSite(value: string): void;
         public openSite(value: string = ""): void
         {
             //Test for link
