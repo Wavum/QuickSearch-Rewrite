@@ -12,6 +12,11 @@ namespace QuickSearch.Data
 
     export class GoogleData
     {
+        /**
+         * Asynchronously gets search suggestions data from Google
+         * @param value Value to get search suggestions from
+         * @param callback Callback which will be executed when the data arrived
+         */
         public static getSearchSuggestions(value: string, callback: (data: GoogleDataSearchSuggestionsResult) => any): void
         {
             let id: string = "i" + Math.random().toString(36).slice(2);

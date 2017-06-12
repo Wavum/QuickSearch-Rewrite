@@ -36,6 +36,10 @@ namespace QuickSearch
 
 
 
+        /**
+         * Parses a JSON text to fill up the values in this object
+         * @param json JSON text to parse
+         */
         public parseJSON(json: string): void
         {
             let parsedConfig: any = JSON.parse(json);
@@ -49,36 +53,57 @@ namespace QuickSearch
             this.quickSearches = parsedConfig.quickSearches;
         }
 
+        /**
+         * Returns UseSearchSuggestions
+         */
         public get UseSearchSuggestions(): boolean
         {
             return this.useSearchSuggestions;
         }
 
+        /**
+         * Returns NumberOfSearchSuggestions
+         */
         public get NumberOfSearchSuggestions(): number
         {
             return this.numberOfSearchSuggestions;
         }
 
+        /**
+         * Returns Homepage
+         */
         public get Homepage(): string
         {
             return this.homepage;
         }
 
+        /**
+         * Returns QuickSearchPattern
+         */
         public get QuickSearchPattern(): string
         {
             return this.quickSearchPattern;
         }
 
+        /**
+         * Returns ClockSeperator
+         */
         public get ClockSeperator(): string
         {
             return this.clockSeperator;
         }
 
+        /**
+         * Returns ShapeColor
+         */
         public get ShapeColor(): string
         {
             return this.shapeColor;
         }
 
+        /**
+         * Returns QuickSearches
+         */
         public get QuickSearches(): IQuickSearches[]
         {
             return this.quickSearches;
