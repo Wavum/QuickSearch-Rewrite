@@ -1,9 +1,14 @@
 namespace QuickSearch.QuickSearchKey
 {
+    interface QuickSearchKey
+    {
+        key: string;
+        site: string;
+    }
+
     export class QuickSearches
     {
-        private key: string[];
-        private site: string[];
+        private keys: QuickSearchKey[];
 
 
 
@@ -16,20 +21,14 @@ namespace QuickSearch.QuickSearchKey
 
         public addSearch(key: string, site: string): void
         {
-            this.key.push(key);
-            this.site.push(site);
+            this.keys.push({ key: key, site: site });
         }
 
 
 
-        public get Key(): string[]
+        public get Keys(): QuickSearchKey[]
         {
-            return this.key;
-        }
-
-        public get Site(): string[]
-        {
-            return this.site;
+            return this.keys;
         }
     }
 }

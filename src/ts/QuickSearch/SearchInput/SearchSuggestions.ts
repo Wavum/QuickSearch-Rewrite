@@ -158,9 +158,6 @@ namespace QuickSearch.SearchInput
             }
         }
 
-        /**
-         * Sets a callback when a suggestions will be clicked
-         */
         public set onclick(callback: (ev: MouseEvent) => any)
         {
             this.onClickCallback = callback;

@@ -182,19 +182,11 @@ var QuickSearch;
             function QuickSearches() {
             }
             QuickSearches.prototype.addSearch = function (key, site) {
-                this.key.push(key);
-                this.site.push(site);
+                this.keys.push({ key: key, site: site });
             };
-            Object.defineProperty(QuickSearches.prototype, "Key", {
+            Object.defineProperty(QuickSearches.prototype, "Keys", {
                 get: function () {
-                    return this.key;
-                },
-                enumerable: true,
-                configurable: true
-            });
-            Object.defineProperty(QuickSearches.prototype, "Site", {
-                get: function () {
-                    return this.site;
+                    return this.keys;
                 },
                 enumerable: true,
                 configurable: true
@@ -242,27 +234,28 @@ var QuickSearch;
             this.quickSearchPattern = "{0} ";
             this.clockSeperator = ":";
             this.shapeColor = "#3a5b83";
-            this.quickSearches = [{ key: "d", site: "https://start.duckduckgo.com/?q={0}" },
-                { key: "s", site: "https://startpage.com/do/search?query={0}" },
-                { key: "g", site: "https://encrypted.google.com/#q={0}" },
-                { key: "y", site: "https://youtube.com/results?search_query={0}" },
-                { key: "r", site: "https://reddit.com/search?q={0}" },
-                { key: "sr", site: "https://reddit.com/r/{0}" },
-                { key: "sx", site: "https://stackexchange.com/search?q={0}" },
-                { key: "so", site: "https://stackoverflow.com/search?q={0}" },
-                { key: "gh", site: "https://github.com/search?q={0}" },
-                { key: "f", site: "https://www.facebook.com/public?query={0}" },
-                { key: "dict", site: "http://www.dict.cc/?s={0}" }];
+            this.quickSearches = new QuickSearch.QuickSearchKey.QuickSearches();
+            this.quickSearches.addSearch("d", "https://start.duckduckgo.com/?q={0}");
+            this.quickSearches.addSearch("s", "https://startpage.com/do/search?query={0}");
+            this.quickSearches.addSearch("g", "https://encrypted.google.com/#q={0}");
+            this.quickSearches.addSearch("y", "https://youtube.com/results?search_query={0}");
+            this.quickSearches.addSearch("r", "https://reddit.com/search?q={0}");
+            this.quickSearches.addSearch("sr", "https://reddit.com/r/{0}");
+            this.quickSearches.addSearch("sx", "https://stackexchange.com/search?q={0}");
+            this.quickSearches.addSearch("so", "https://stackoverflow.com/search?q={0}");
+            this.quickSearches.addSearch("gh", "https://github.com/search?q={0}");
+            this.quickSearches.addSearch("f", "https://www.facebook.com/public?query={0}");
+            this.quickSearches.addSearch("dict", "http://www.dict.cc/?s={0}");
         }
         Config.prototype.parseJSON = function (json) {
             var parsedConfig = JSON.parse(json);
-            this.useSearchSuggestions = parsedConfig.useSearchSuggestions;
-            this.numberOfSearchSuggestions = parsedConfig.numberOfSearchSuggestions;
-            this.homepage = parsedConfig.homepage;
-            this.quickSearchPattern = parsedConfig.quickSearchPattern;
-            this.clockSeperator = parsedConfig.clockSeperator;
-            this.shapeColor = parsedConfig.shapeColor;
-            this.quickSearches = parsedConfig.quickSearches;
+            this.useSearchSuggestions = parsedConfig.UseSearchSuggestions;
+            this.numberOfSearchSuggestions = parsedConfig.NumberOfSearchSuggestions;
+            this.homepage = parsedConfig.Homepage;
+            this.quickSearchPattern = parsedConfig.QuickSearchPattern;
+            this.clockSeperator = parsedConfig.ClockSeperator;
+            this.shapeColor = parsedConfig.ShapeColor;
+            this.quickSearches = parsedConfig.QuickSearches;
         };
         Object.defineProperty(Config.prototype, "UseSearchSuggestions", {
             get: function () {
