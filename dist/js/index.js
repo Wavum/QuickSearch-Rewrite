@@ -176,6 +176,36 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
+    var QuickSearchKey;
+    (function (QuickSearchKey) {
+        var QuickSearches = (function () {
+            function QuickSearches() {
+            }
+            QuickSearches.prototype.addSearch = function (key, site) {
+                this.key.push(key);
+                this.site.push(site);
+            };
+            Object.defineProperty(QuickSearches.prototype, "Key", {
+                get: function () {
+                    return this.key;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(QuickSearches.prototype, "Site", {
+                get: function () {
+                    return this.site;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return QuickSearches;
+        }());
+        QuickSearchKey.QuickSearches = QuickSearches;
+    })(QuickSearchKey = QuickSearch.QuickSearchKey || (QuickSearch.QuickSearchKey = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
     var Data;
     (function (Data) {
         var GoogleData = (function () {
