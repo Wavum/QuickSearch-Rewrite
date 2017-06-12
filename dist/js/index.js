@@ -326,9 +326,10 @@ var QuickSearch;
                 this.separator = ":";
                 this.clock = $("#" + clockID);
             }
-            Clock.prototype.initInterval = function () {
+            Clock.prototype.initInterval = function (timeout) {
+                if (timeout === void 0) { timeout = 10000; }
                 this.updateTime();
-                setInterval(this.updateTime.bind(this), 10000);
+                setInterval(this.updateTime.bind(this), timeout);
             };
             Clock.prototype.updateTime = function () {
                 var date = new Date();
@@ -384,7 +385,7 @@ var QuickSearch;
                 this.maxResults = 4;
                 this.searchSuggestionsDiv = $("#" + parentID);
                 this.searchSuggestionsDiv.mouseout(this.resetSelectedSuggestion.bind(this));
-                this.searchSuggestionsDiv.clickOutside(this.hideSearchSuggestions.bind(this));
+                this.searchSuggestionsDiv.clickOutside(this.hideSuggestions.bind(this));
             }
             SearchSuggestions.prototype.showSuggestions = function (text) {
                 this.inputValue = text;
@@ -401,10 +402,10 @@ var QuickSearch;
                     }.bind(this));
                 }
                 else {
-                    this.hideSearchSuggestions();
+                    this.hideSuggestions();
                 }
             };
-            SearchSuggestions.prototype.hideSearchSuggestions = function () {
+            SearchSuggestions.prototype.hideSuggestions = function () {
                 this.searchSuggestionsDiv.html("");
             };
             SearchSuggestions.prototype.selectDownwards = function () {
@@ -565,7 +566,7 @@ var QuickSearch;
                         value = this.searchSuggestions.selectDownwards();
                         break;
                     case this.keyCodes.ESCAPE:
-                        this.searchSuggestions.hideSearchSuggestions();
+                        this.searchSuggestions.hideSuggestions();
                         break;
                     default:
                         this.searchSuggestions.showSuggestions(value);

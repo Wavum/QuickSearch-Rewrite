@@ -46,7 +46,7 @@ namespace QuickSearch.SearchInput
                     break;
 
                 case this.keyCodes.ESCAPE:
-                    this.searchSuggestions.hideSearchSuggestions();
+                    this.searchSuggestions.hideSuggestions();
                     break;
 
                 default:
