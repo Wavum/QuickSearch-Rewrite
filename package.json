@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap-sidebar": "^0.2.2-retry",
     "jquery": "^3.2.1",
     "tether": "^1.4.0"
   }
