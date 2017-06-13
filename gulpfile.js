@@ -15,8 +15,12 @@ var uglify = require("gulp-uglify");
 
 var buildPath = "dist";
 var sourcePath = "src";
-var vendorCSSPaths = ["node_modules/bootstrap/dist/css/bootstrap.min.css"];
-var vendorJSPaths = ["node_modules/jquery/dist/jquery.min.js", "node_modules/tether/dist/js/tether.min.js", "node_modules/bootstrap/dist/js/bootstrap.min.js"];
+var vendorCSSPaths = ["node_modules/bootstrap/dist/css/bootstrap.min.css",
+                      "node_modules/bootstrap-sidebar/dist/css/sidebar.css"];
+var vendorJSPaths = ["node_modules/jquery/dist/jquery.min.js",
+                     "node_modules/tether/dist/js/tether.min.js",
+                     "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                     "node_modules/bootstrap-sidebar/dist/js/sidebar.js"];
 
 gulp.task("vendorClean", function()
 {
@@ -51,9 +55,13 @@ gulp.task("clean", function()
 gulp.task("vendorBuild", function()
 {
     gulp.src(vendorCSSPaths)
+        .pipe(plumber())
+        .pipe(cleanCSS())
         .pipe(gulp.dest(buildPath + "/vendor/css"));
 
     gulp.src(vendorJSPaths)
+        .pipe(plumber())
+        .pipe(uglify())
         .pipe(gulp.dest(buildPath + "/vendor/js"));
 });
 
@@ -62,7 +70,7 @@ gulp.task("jsBuild", function()
     // Hopefully later supported: https://github.com/gulp-sourcemaps/gulp-sourcemaps/issues/191
     // var javascriptFiles = gulp.src(sourcePath + "/js/**/*.js")
     //                           .pipe(plumber())
-    //                           .pipe(sourcemaps.init()); 
+    //                           .pipe(sourcemaps.init());
 
     var typescriptFiles = gulp.src(sourcePath + "/ts/**/*.ts")
                               .pipe(plumber())

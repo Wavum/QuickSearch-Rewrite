@@ -16,6 +16,13 @@
             "args": ["buildWatch"],
             "isShellCommand": true,
             "isBackground": true
+        },
+        {
+            "taskName": "BuildVendor",
+            "command": "gulp",
+            "args": ["vendorBuild"],
+            "isShellCommand": true,
+            "isBackground": true
         }
     ]
 }
