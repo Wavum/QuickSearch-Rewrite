@@ -158,6 +158,8 @@ namespace QuickSearch.SearchInput
             }
         }
 
+
+
         public set onclick(callback: (ev: MouseEvent) => any)
         {
             this.onClickCallback = callback;

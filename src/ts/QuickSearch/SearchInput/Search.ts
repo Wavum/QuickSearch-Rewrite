@@ -2,6 +2,7 @@ namespace QuickSearch.SearchInput
 {
     export class Search
     {
+        private quickKey: QuickKey = new QuickKey("main-quickKey");
         private searchSuggestions: SearchSuggestions = new SearchSuggestions("main-searchSuggestions");
         private homepage: Homepage = new Homepage("https://start.duckduckgo.com/?q={0}");
         private searchInput: JQuery;
@@ -16,6 +17,9 @@ namespace QuickSearch.SearchInput
             this.searchInput.keyup(this.keyPressed.bind(this));
 
             this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
+
+            //TODO: Rework this feature
+            this.quickKey.initConfig(new Config());
         }
 
 
@@ -31,25 +35,26 @@ namespace QuickSearch.SearchInput
 
             switch (originalEvent.keyCode)
             {
-                case this.keyCodes.ENTER:
+                case this.keyCodes.Enter:
                     this.homepage.openSite(value);
                     break;
 
-                case this.keyCodes.PAGE_UP:
-                case this.keyCodes.UP_ARROW:
+                case this.keyCodes.PageUp:
+                case this.keyCodes.UpArrow:
                     value = this.searchSuggestions.selectUpwards();
                     break;
 
-                case this.keyCodes.PAGE_DOWN:
-                case this.keyCodes.DOWN_ARROW:
+                case this.keyCodes.PageUp:
+                case this.keyCodes.DownArrow:
                     value = this.searchSuggestions.selectDownwards();
                     break;
 
-                case this.keyCodes.ESCAPE:
+                case this.keyCodes.Escape:
                     this.searchSuggestions.hideSuggestions();
                     break;
 
                 default:
+                    value = this.quickKey.showQuickKey(value);
                     this.searchSuggestions.showSuggestions(value);
                     break;
             }

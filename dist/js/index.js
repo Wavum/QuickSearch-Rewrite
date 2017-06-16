@@ -50,79 +50,79 @@ var QuickSearch;
     (function (Utilities) {
         var KeyCodes;
         (function (KeyCodes) {
-            KeyCodes[KeyCodes["BACKSPACE"] = 8] = "BACKSPACE";
-            KeyCodes[KeyCodes["TAB"] = 9] = "TAB";
-            KeyCodes[KeyCodes["ENTER"] = 13] = "ENTER";
-            KeyCodes[KeyCodes["SHIFT"] = 16] = "SHIFT";
-            KeyCodes[KeyCodes["CTRL"] = 17] = "CTRL";
-            KeyCodes[KeyCodes["ALT"] = 18] = "ALT";
-            KeyCodes[KeyCodes["PAUSE_BREAK"] = 19] = "PAUSE_BREAK";
-            KeyCodes[KeyCodes["CAPSLOCK"] = 20] = "CAPSLOCK";
-            KeyCodes[KeyCodes["ESCAPE"] = 27] = "ESCAPE";
-            KeyCodes[KeyCodes["PAGE_UP"] = 33] = "PAGE_UP";
-            KeyCodes[KeyCodes["PAGE_DOWN"] = 34] = "PAGE_DOWN";
-            KeyCodes[KeyCodes["END"] = 35] = "END";
-            KeyCodes[KeyCodes["HOME"] = 36] = "HOME";
-            KeyCodes[KeyCodes["LEFT_ARROW"] = 37] = "LEFT_ARROW";
-            KeyCodes[KeyCodes["UP_ARROW"] = 38] = "UP_ARROW";
-            KeyCodes[KeyCodes["RIGHT_ARROW"] = 39] = "RIGHT_ARROW";
-            KeyCodes[KeyCodes["DOWN_ARROW"] = 40] = "DOWN_ARROW";
-            KeyCodes[KeyCodes["INSERT"] = 45] = "INSERT";
-            KeyCodes[KeyCodes["DELETE"] = 46] = "DELETE";
-            KeyCodes[KeyCodes["KEY_0"] = 48] = "KEY_0";
-            KeyCodes[KeyCodes["KEY_1"] = 49] = "KEY_1";
-            KeyCodes[KeyCodes["KEY_2"] = 50] = "KEY_2";
-            KeyCodes[KeyCodes["KEY_3"] = 51] = "KEY_3";
-            KeyCodes[KeyCodes["KEY_4"] = 52] = "KEY_4";
-            KeyCodes[KeyCodes["KEY_5"] = 53] = "KEY_5";
-            KeyCodes[KeyCodes["KEY_6"] = 54] = "KEY_6";
-            KeyCodes[KeyCodes["KEY_7"] = 55] = "KEY_7";
-            KeyCodes[KeyCodes["KEY_8"] = 56] = "KEY_8";
-            KeyCodes[KeyCodes["KEY_9"] = 57] = "KEY_9";
-            KeyCodes[KeyCodes["KEY_A"] = 65] = "KEY_A";
-            KeyCodes[KeyCodes["KEY_B"] = 66] = "KEY_B";
-            KeyCodes[KeyCodes["KEY_C"] = 67] = "KEY_C";
-            KeyCodes[KeyCodes["KEY_D"] = 68] = "KEY_D";
-            KeyCodes[KeyCodes["KEY_E"] = 69] = "KEY_E";
-            KeyCodes[KeyCodes["KEY_F"] = 70] = "KEY_F";
-            KeyCodes[KeyCodes["KEY_G"] = 71] = "KEY_G";
-            KeyCodes[KeyCodes["KEY_H"] = 72] = "KEY_H";
-            KeyCodes[KeyCodes["KEY_I"] = 73] = "KEY_I";
-            KeyCodes[KeyCodes["KEY_J"] = 74] = "KEY_J";
-            KeyCodes[KeyCodes["KEY_K"] = 75] = "KEY_K";
-            KeyCodes[KeyCodes["KEY_L"] = 76] = "KEY_L";
-            KeyCodes[KeyCodes["KEY_M"] = 77] = "KEY_M";
-            KeyCodes[KeyCodes["KEY_N"] = 78] = "KEY_N";
-            KeyCodes[KeyCodes["KEY_O"] = 79] = "KEY_O";
-            KeyCodes[KeyCodes["KEY_P"] = 80] = "KEY_P";
-            KeyCodes[KeyCodes["KEY_Q"] = 81] = "KEY_Q";
-            KeyCodes[KeyCodes["KEY_R"] = 82] = "KEY_R";
-            KeyCodes[KeyCodes["KEY_S"] = 83] = "KEY_S";
-            KeyCodes[KeyCodes["KEY_T"] = 84] = "KEY_T";
-            KeyCodes[KeyCodes["KEY_U"] = 85] = "KEY_U";
-            KeyCodes[KeyCodes["KEY_V"] = 86] = "KEY_V";
-            KeyCodes[KeyCodes["KEY_W"] = 87] = "KEY_W";
-            KeyCodes[KeyCodes["KEY_X"] = 88] = "KEY_X";
-            KeyCodes[KeyCodes["KEY_Y"] = 89] = "KEY_Y";
-            KeyCodes[KeyCodes["KEY_Z"] = 90] = "KEY_Z";
-            KeyCodes[KeyCodes["LEFT_WINDOW_KEY"] = 91] = "LEFT_WINDOW_KEY";
-            KeyCodes[KeyCodes["RIGHT_WINDOW_KEY"] = 92] = "RIGHT_WINDOW_KEY";
-            KeyCodes[KeyCodes["SELECT_KEY"] = 93] = "SELECT_KEY";
-            KeyCodes[KeyCodes["NUMPAD_0"] = 96] = "NUMPAD_0";
-            KeyCodes[KeyCodes["NUMPAD_1"] = 97] = "NUMPAD_1";
-            KeyCodes[KeyCodes["NUMPAD_2"] = 98] = "NUMPAD_2";
-            KeyCodes[KeyCodes["NUMPAD_3"] = 99] = "NUMPAD_3";
-            KeyCodes[KeyCodes["NUMPAD_4"] = 100] = "NUMPAD_4";
-            KeyCodes[KeyCodes["NUMPAD_5"] = 101] = "NUMPAD_5";
-            KeyCodes[KeyCodes["NUMPAD_6"] = 102] = "NUMPAD_6";
-            KeyCodes[KeyCodes["NUMPAD_7"] = 103] = "NUMPAD_7";
-            KeyCodes[KeyCodes["NUMPAD_8"] = 104] = "NUMPAD_8";
-            KeyCodes[KeyCodes["NUMPAD_9"] = 105] = "NUMPAD_9";
-            KeyCodes[KeyCodes["MULTIPLY"] = 106] = "MULTIPLY";
-            KeyCodes[KeyCodes["ADD"] = 107] = "ADD";
-            KeyCodes[KeyCodes["SUBTRACT"] = 109] = "SUBTRACT";
-            KeyCodes[KeyCodes["DECIMAL_POINT"] = 110] = "DECIMAL_POINT";
-            KeyCodes[KeyCodes["DIVIDE"] = 111] = "DIVIDE";
+            KeyCodes[KeyCodes["Backspace"] = 8] = "Backspace";
+            KeyCodes[KeyCodes["Tab"] = 9] = "Tab";
+            KeyCodes[KeyCodes["Enter"] = 13] = "Enter";
+            KeyCodes[KeyCodes["Shift"] = 16] = "Shift";
+            KeyCodes[KeyCodes["Ctrl"] = 17] = "Ctrl";
+            KeyCodes[KeyCodes["Alt"] = 18] = "Alt";
+            KeyCodes[KeyCodes["PauseBreak"] = 19] = "PauseBreak";
+            KeyCodes[KeyCodes["Capslock"] = 20] = "Capslock";
+            KeyCodes[KeyCodes["Escape"] = 27] = "Escape";
+            KeyCodes[KeyCodes["PageUp"] = 33] = "PageUp";
+            KeyCodes[KeyCodes["PageDown"] = 34] = "PageDown";
+            KeyCodes[KeyCodes["End"] = 35] = "End";
+            KeyCodes[KeyCodes["Home"] = 36] = "Home";
+            KeyCodes[KeyCodes["LeftArrow"] = 37] = "LeftArrow";
+            KeyCodes[KeyCodes["UpArrow"] = 38] = "UpArrow";
+            KeyCodes[KeyCodes["RightArrow"] = 39] = "RightArrow";
+            KeyCodes[KeyCodes["DownArrow"] = 40] = "DownArrow";
+            KeyCodes[KeyCodes["Insert"] = 45] = "Insert";
+            KeyCodes[KeyCodes["Delete"] = 46] = "Delete";
+            KeyCodes[KeyCodes["Key0"] = 48] = "Key0";
+            KeyCodes[KeyCodes["Key1"] = 49] = "Key1";
+            KeyCodes[KeyCodes["Key2"] = 50] = "Key2";
+            KeyCodes[KeyCodes["Key3"] = 51] = "Key3";
+            KeyCodes[KeyCodes["Key4"] = 52] = "Key4";
+            KeyCodes[KeyCodes["Key5"] = 53] = "Key5";
+            KeyCodes[KeyCodes["Key6"] = 54] = "Key6";
+            KeyCodes[KeyCodes["Key7"] = 55] = "Key7";
+            KeyCodes[KeyCodes["Key8"] = 56] = "Key8";
+            KeyCodes[KeyCodes["Key9"] = 57] = "Key9";
+            KeyCodes[KeyCodes["KeyA"] = 65] = "KeyA";
+            KeyCodes[KeyCodes["KeyB"] = 66] = "KeyB";
+            KeyCodes[KeyCodes["KeyC"] = 67] = "KeyC";
+            KeyCodes[KeyCodes["KeyD"] = 68] = "KeyD";
+            KeyCodes[KeyCodes["KeyE"] = 69] = "KeyE";
+            KeyCodes[KeyCodes["KeyF"] = 70] = "KeyF";
+            KeyCodes[KeyCodes["KeyG"] = 71] = "KeyG";
+            KeyCodes[KeyCodes["KeyH"] = 72] = "KeyH";
+            KeyCodes[KeyCodes["KeyI"] = 73] = "KeyI";
+            KeyCodes[KeyCodes["KeyJ"] = 74] = "KeyJ";
+            KeyCodes[KeyCodes["KeyK"] = 75] = "KeyK";
+            KeyCodes[KeyCodes["KeyL"] = 76] = "KeyL";
+            KeyCodes[KeyCodes["KeyM"] = 77] = "KeyM";
+            KeyCodes[KeyCodes["KeyN"] = 78] = "KeyN";
+            KeyCodes[KeyCodes["KeyO"] = 79] = "KeyO";
+            KeyCodes[KeyCodes["KeyP"] = 80] = "KeyP";
+            KeyCodes[KeyCodes["KeyQ"] = 81] = "KeyQ";
+            KeyCodes[KeyCodes["KeyR"] = 82] = "KeyR";
+            KeyCodes[KeyCodes["KeyS"] = 83] = "KeyS";
+            KeyCodes[KeyCodes["KeyT"] = 84] = "KeyT";
+            KeyCodes[KeyCodes["KeyU"] = 85] = "KeyU";
+            KeyCodes[KeyCodes["KeyV"] = 86] = "KeyV";
+            KeyCodes[KeyCodes["KeyW"] = 87] = "KeyW";
+            KeyCodes[KeyCodes["KeyX"] = 88] = "KeyX";
+            KeyCodes[KeyCodes["KeyY"] = 89] = "KeyY";
+            KeyCodes[KeyCodes["KeyZ"] = 90] = "KeyZ";
+            KeyCodes[KeyCodes["LeftWindowKey"] = 91] = "LeftWindowKey";
+            KeyCodes[KeyCodes["RightWindowKey"] = 92] = "RightWindowKey";
+            KeyCodes[KeyCodes["SelectKey"] = 93] = "SelectKey";
+            KeyCodes[KeyCodes["Numpad0"] = 96] = "Numpad0";
+            KeyCodes[KeyCodes["Numpad1"] = 97] = "Numpad1";
+            KeyCodes[KeyCodes["Numpad2"] = 98] = "Numpad2";
+            KeyCodes[KeyCodes["Numpad3"] = 99] = "Numpad3";
+            KeyCodes[KeyCodes["Numpad4"] = 100] = "Numpad4";
+            KeyCodes[KeyCodes["Numpad5"] = 101] = "Numpad5";
+            KeyCodes[KeyCodes["Numpad6"] = 102] = "Numpad6";
+            KeyCodes[KeyCodes["Numpad7"] = 103] = "Numpad7";
+            KeyCodes[KeyCodes["Numpad8"] = 104] = "Numpad8";
+            KeyCodes[KeyCodes["Numpad9"] = 105] = "Numpad9";
+            KeyCodes[KeyCodes["Multiply"] = 106] = "Multiply";
+            KeyCodes[KeyCodes["Add"] = 107] = "Add";
+            KeyCodes[KeyCodes["Subtract"] = 109] = "Subtract";
+            KeyCodes[KeyCodes["DecimalPoint"] = 110] = "DecimalPoint";
+            KeyCodes[KeyCodes["Divide"] = 111] = "Divide";
             KeyCodes[KeyCodes["F1"] = 112] = "F1";
             KeyCodes[KeyCodes["F2"] = 113] = "F2";
             KeyCodes[KeyCodes["F3"] = 114] = "F3";
@@ -135,19 +135,19 @@ var QuickSearch;
             KeyCodes[KeyCodes["F10"] = 121] = "F10";
             KeyCodes[KeyCodes["F11"] = 122] = "F11";
             KeyCodes[KeyCodes["F12"] = 123] = "F12";
-            KeyCodes[KeyCodes["NUM_LOCK"] = 144] = "NUM_LOCK";
-            KeyCodes[KeyCodes["SCROLL_LOCK"] = 145] = "SCROLL_LOCK";
-            KeyCodes[KeyCodes["SEMICOLON"] = 186] = "SEMICOLON";
-            KeyCodes[KeyCodes["EQUAL_SIGN"] = 187] = "EQUAL_SIGN";
-            KeyCodes[KeyCodes["COMMA"] = 188] = "COMMA";
-            KeyCodes[KeyCodes["DASH"] = 189] = "DASH";
-            KeyCodes[KeyCodes["PERIOD"] = 190] = "PERIOD";
-            KeyCodes[KeyCodes["FORWARD_SLASH"] = 191] = "FORWARD_SLASH";
-            KeyCodes[KeyCodes["GRAVE_ACCENT"] = 192] = "GRAVE_ACCENT";
-            KeyCodes[KeyCodes["OPEN_BRACKET"] = 219] = "OPEN_BRACKET";
-            KeyCodes[KeyCodes["BACK_SLASH"] = 220] = "BACK_SLASH";
-            KeyCodes[KeyCodes["CLOSE_BRAKET"] = 221] = "CLOSE_BRAKET";
-            KeyCodes[KeyCodes["SINGLE_QUOTE"] = 222] = "SINGLE_QUOTE";
+            KeyCodes[KeyCodes["NumLock"] = 144] = "NumLock";
+            KeyCodes[KeyCodes["ScrollLock"] = 145] = "ScrollLock";
+            KeyCodes[KeyCodes["Semicolon"] = 186] = "Semicolon";
+            KeyCodes[KeyCodes["EqualSign"] = 187] = "EqualSign";
+            KeyCodes[KeyCodes["Comma"] = 188] = "Comma";
+            KeyCodes[KeyCodes["Dash"] = 189] = "Dash";
+            KeyCodes[KeyCodes["Period"] = 190] = "Period";
+            KeyCodes[KeyCodes["ForwardSlash"] = 191] = "ForwardSlash";
+            KeyCodes[KeyCodes["GraveAccent"] = 192] = "GraveAccent";
+            KeyCodes[KeyCodes["OpenBracket"] = 219] = "OpenBracket";
+            KeyCodes[KeyCodes["BackSlash"] = 220] = "BackSlash";
+            KeyCodes[KeyCodes["CloseBraket"] = 221] = "CloseBraket";
+            KeyCodes[KeyCodes["SingleQuote"] = 222] = "SingleQuote";
         })(KeyCodes = Utilities.KeyCodes || (Utilities.KeyCodes = {}));
     })(Utilities = QuickSearch.Utilities || (QuickSearch.Utilities = {}));
 })(QuickSearch || (QuickSearch = {}));
@@ -180,9 +180,27 @@ var QuickSearch;
     (function (QuickSearchKey) {
         var QuickSearches = (function () {
             function QuickSearches() {
+                this.keys = new Array();
             }
-            QuickSearches.prototype.addSearch = function (key, site) {
+            QuickSearches.prototype.addQuickSearch = function (key, site) {
                 this.keys.push({ key: key, site: site });
+            };
+            QuickSearches.prototype.startsWithKey = function (text) {
+                if (this.getKey(text) === "")
+                    return false;
+                return true;
+            };
+            QuickSearches.prototype.getKey = function (text) {
+                var retKey = "";
+                this.keys.forEach(function (key) {
+                    if (text.startsWith(key.key + " ")) {
+                        retKey = key.key;
+                    }
+                }.bind(this));
+                return retKey;
+            };
+            QuickSearches.prototype.removeKey = function (text) {
+                return text.replace(this.getKey(text) + " ", "");
             };
             Object.defineProperty(QuickSearches.prototype, "Keys", {
                 get: function () {
@@ -235,17 +253,17 @@ var QuickSearch;
             this.clockSeperator = ":";
             this.shapeColor = "#3a5b83";
             this.quickSearches = new QuickSearch.QuickSearchKey.QuickSearches();
-            this.quickSearches.addSearch("d", "https://start.duckduckgo.com/?q={0}");
-            this.quickSearches.addSearch("s", "https://startpage.com/do/search?query={0}");
-            this.quickSearches.addSearch("g", "https://encrypted.google.com/#q={0}");
-            this.quickSearches.addSearch("y", "https://youtube.com/results?search_query={0}");
-            this.quickSearches.addSearch("r", "https://reddit.com/search?q={0}");
-            this.quickSearches.addSearch("sr", "https://reddit.com/r/{0}");
-            this.quickSearches.addSearch("sx", "https://stackexchange.com/search?q={0}");
-            this.quickSearches.addSearch("so", "https://stackoverflow.com/search?q={0}");
-            this.quickSearches.addSearch("gh", "https://github.com/search?q={0}");
-            this.quickSearches.addSearch("f", "https://www.facebook.com/public?query={0}");
-            this.quickSearches.addSearch("dict", "http://www.dict.cc/?s={0}");
+            this.quickSearches.addQuickSearch("d", "https://start.duckduckgo.com/?q={0}");
+            this.quickSearches.addQuickSearch("s", "https://startpage.com/do/search?query={0}");
+            this.quickSearches.addQuickSearch("g", "https://encrypted.google.com/#q={0}");
+            this.quickSearches.addQuickSearch("y", "https://youtube.com/results?search_query={0}");
+            this.quickSearches.addQuickSearch("r", "https://reddit.com/search?q={0}");
+            this.quickSearches.addQuickSearch("sr", "https://reddit.com/r/{0}");
+            this.quickSearches.addQuickSearch("sx", "https://stackexchange.com/search?q={0}");
+            this.quickSearches.addQuickSearch("so", "https://stackoverflow.com/search?q={0}");
+            this.quickSearches.addQuickSearch("gh", "https://github.com/search?q={0}");
+            this.quickSearches.addQuickSearch("f", "https://www.facebook.com/public?query={0}");
+            this.quickSearches.addQuickSearch("dict", "http://www.dict.cc/?s={0}");
         }
         Config.prototype.parseJSON = function (json) {
             var parsedConfig = JSON.parse(json);
@@ -261,12 +279,18 @@ var QuickSearch;
             get: function () {
                 return this.useSearchSuggestions;
             },
+            set: function (value) {
+                this.useSearchSuggestions = value;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Config.prototype, "NumberOfSearchSuggestions", {
             get: function () {
                 return this.numberOfSearchSuggestions;
+            },
+            set: function (value) {
+                this.numberOfSearchSuggestions = value;
             },
             enumerable: true,
             configurable: true
@@ -275,12 +299,18 @@ var QuickSearch;
             get: function () {
                 return this.homepage;
             },
+            set: function (value) {
+                this.homepage = value;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Config.prototype, "QuickSearchPattern", {
             get: function () {
                 return this.quickSearchPattern;
+            },
+            set: function (value) {
+                this.quickSearchPattern = value;
             },
             enumerable: true,
             configurable: true
@@ -289,6 +319,9 @@ var QuickSearch;
             get: function () {
                 return this.clockSeperator;
             },
+            set: function (value) {
+                this.clockSeperator = value;
+            },
             enumerable: true,
             configurable: true
         });
@@ -296,12 +329,18 @@ var QuickSearch;
             get: function () {
                 return this.shapeColor;
             },
+            set: function (value) {
+                this.shapeColor = value;
+            },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(Config.prototype, "QuickSearches", {
             get: function () {
                 return this.quickSearches;
+            },
+            set: function (value) {
+                this.quickSearches = value;
             },
             enumerable: true,
             configurable: true
@@ -362,6 +401,49 @@ var QuickSearch;
             return Homepage;
         }());
         SearchInput.Homepage = Homepage;
+    })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch) {
+    var SearchInput;
+    (function (SearchInput) {
+        var QuickKey = (function () {
+            function QuickKey(parentID) {
+                this.quickKeyDiv = $("#" + parentID);
+                this.quickKeyText = $("#" + parentID + " div.text");
+                this.quickKeyCloseButton = $("#" + parentID + " button.close");
+                this.quickKeyCloseButton.click(this.hideQuickKey.bind(this));
+            }
+            QuickKey.prototype.initConfig = function (config) {
+                this.QuickSearches = config.QuickSearches;
+            };
+            QuickKey.prototype.showQuickKey = function (text) {
+                if (!this.quickSearches.startsWithKey(text))
+                    return text;
+                this.show(this.quickSearches.getKey(text));
+                return this.quickSearches.removeKey(text);
+            };
+            QuickKey.prototype.hideQuickKey = function () {
+                this.quickKeyDiv.css("display", "none");
+            };
+            Object.defineProperty(QuickKey.prototype, "QuickSearches", {
+                get: function () {
+                    return this.quickSearches;
+                },
+                set: function (value) {
+                    this.quickSearches = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            QuickKey.prototype.show = function (text) {
+                if (text === void 0) { text = ""; }
+                this.quickKeyDiv.css("display", "flex");
+                this.quickKeyText.text(text);
+            };
+            return QuickKey;
+        }());
+        SearchInput.QuickKey = QuickKey;
     })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
@@ -536,32 +618,35 @@ var QuickSearch;
     (function (SearchInput) {
         var Search = (function () {
             function Search(searchID) {
+                this.quickKey = new SearchInput.QuickKey("main-quickKey");
                 this.searchSuggestions = new SearchInput.SearchSuggestions("main-searchSuggestions");
                 this.homepage = new SearchInput.Homepage("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyPressed.bind(this));
                 this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
+                this.quickKey.initConfig(new QuickSearch.Config());
             }
             Search.prototype.keyPressed = function (ev) {
                 var originalEvent = ev.originalEvent;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {
-                    case this.keyCodes.ENTER:
+                    case this.keyCodes.Enter:
                         this.homepage.openSite(value);
                         break;
-                    case this.keyCodes.PAGE_UP:
-                    case this.keyCodes.UP_ARROW:
+                    case this.keyCodes.PageUp:
+                    case this.keyCodes.UpArrow:
                         value = this.searchSuggestions.selectUpwards();
                         break;
-                    case this.keyCodes.PAGE_DOWN:
-                    case this.keyCodes.DOWN_ARROW:
+                    case this.keyCodes.PageUp:
+                    case this.keyCodes.DownArrow:
                         value = this.searchSuggestions.selectDownwards();
                         break;
-                    case this.keyCodes.ESCAPE:
+                    case this.keyCodes.Escape:
                         this.searchSuggestions.hideSuggestions();
                         break;
                     default:
+                        value = this.quickKey.showQuickKey(value);
                         this.searchSuggestions.showSuggestions(value);
                         break;
                 }

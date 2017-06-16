@@ -89,11 +89,9 @@ html, body {
   background-color: #3a5b83;
   border: 2px solid #3a5b83;
   color: #000000;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex; }
+  display: none; }
 
-#main-quickKeyRemove {
+#main-quickKey button.close {
   margin-left: 6px; }
 
 #main-searchInput {

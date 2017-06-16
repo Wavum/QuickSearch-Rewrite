@@ -15,17 +15,17 @@ namespace QuickSearch
 
         public constructor()
         {
-            this.quickSearches.addSearch("d", "https://start.duckduckgo.com/?q={0}");
-            this.quickSearches.addSearch("s", "https://startpage.com/do/search?query={0}");
-            this.quickSearches.addSearch("g", "https://encrypted.google.com/#q={0}");
-            this.quickSearches.addSearch("y", "https://youtube.com/results?search_query={0}");
-            this.quickSearches.addSearch("r", "https://reddit.com/search?q={0}");
-            this.quickSearches.addSearch("sr", "https://reddit.com/r/{0}");
-            this.quickSearches.addSearch("sx", "https://stackexchange.com/search?q={0}");
-            this.quickSearches.addSearch("so", "https://stackoverflow.com/search?q={0}");
-            this.quickSearches.addSearch("gh", "https://github.com/search?q={0}");
-            this.quickSearches.addSearch("f", "https://www.facebook.com/public?query={0}");
-            this.quickSearches.addSearch("dict", "http://www.dict.cc/?s={0}");
+            this.quickSearches.addQuickSearch("d", "https://start.duckduckgo.com/?q={0}");
+            this.quickSearches.addQuickSearch("s", "https://startpage.com/do/search?query={0}");
+            this.quickSearches.addQuickSearch("g", "https://encrypted.google.com/#q={0}");
+            this.quickSearches.addQuickSearch("y", "https://youtube.com/results?search_query={0}");
+            this.quickSearches.addQuickSearch("r", "https://reddit.com/search?q={0}");
+            this.quickSearches.addQuickSearch("sr", "https://reddit.com/r/{0}");
+            this.quickSearches.addQuickSearch("sx", "https://stackexchange.com/search?q={0}");
+            this.quickSearches.addQuickSearch("so", "https://stackoverflow.com/search?q={0}");
+            this.quickSearches.addQuickSearch("gh", "https://github.com/search?q={0}");
+            this.quickSearches.addQuickSearch("f", "https://www.facebook.com/public?query={0}");
+            this.quickSearches.addQuickSearch("dict", "http://www.dict.cc/?s={0}");
         }
 
 
@@ -49,9 +49,19 @@ namespace QuickSearch
 
 
 
+        public set UseSearchSuggestions(value: boolean)
+        {
+            this.useSearchSuggestions = value;
+        }
+
         public get UseSearchSuggestions(): boolean
         {
             return this.useSearchSuggestions;
+        }
+
+        public set NumberOfSearchSuggestions(value: number)
+        {
+            this.numberOfSearchSuggestions = value;
         }
 
         public get NumberOfSearchSuggestions(): number
@@ -59,9 +69,19 @@ namespace QuickSearch
             return this.numberOfSearchSuggestions;
         }
 
+        public set Homepage(value: string)
+        {
+            this.homepage = value;
+        }
+
         public get Homepage(): string
         {
             return this.homepage;
+        }
+
+        public set QuickSearchPattern(value: string)
+        {
+            this.quickSearchPattern = value;
         }
 
         public get QuickSearchPattern(): string
@@ -69,14 +89,29 @@ namespace QuickSearch
             return this.quickSearchPattern;
         }
 
+        public set ClockSeperator(value: string)
+        {
+            this.clockSeperator = value;
+        }
+
         public get ClockSeperator(): string
         {
             return this.clockSeperator;
         }
 
+        public set ShapeColor(value: string)
+        {
+            this.shapeColor = value;
+        }
+
         public get ShapeColor(): string
         {
             return this.shapeColor;
+        }
+
+        public set QuickSearches(value: QuickSearchKey.QuickSearches)
+        {
+            this.quickSearches = value;
         }
 
         public get QuickSearches(): QuickSearchKey.QuickSearches

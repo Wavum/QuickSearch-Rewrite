@@ -41,10 +41,10 @@ $white: #FFFFFF;
 	background-color: $shapeColor;
 	border: 2px solid $shapeColor;
 	color: $black;
-	display: flex;
+	display: none;
 }
 
-#main-quickKeyRemove
+#main-quickKey button.close
 {
 	margin-left: 6px;
 }
