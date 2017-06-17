@@ -265,6 +265,9 @@ var QuickSearch;
             this.quickSearches.addQuickSearch("f", "https://www.facebook.com/public?query={0}");
             this.quickSearches.addQuickSearch("dict", "http://www.dict.cc/?s={0}");
         }
+        Config.prototype.getJSON = function () {
+            return JSON.stringify(this);
+        };
         Config.prototype.parseJSON = function (json) {
             var parsedConfig = JSON.parse(json);
             this.useSearchSuggestions = parsedConfig.UseSearchSuggestions;
@@ -425,6 +428,7 @@ var QuickSearch;
             };
             QuickKey.prototype.hideQuickKey = function () {
                 this.quickKeyDiv.css("display", "none");
+                this.quickKeyText.text("");
             };
             Object.defineProperty(QuickKey.prototype, "QuickSearches", {
                 get: function () {
@@ -623,11 +627,26 @@ var QuickSearch;
                 this.homepage = new SearchInput.Homepage("https://start.duckduckgo.com/?q={0}");
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
-                this.searchInput.keyup(this.keyPressed.bind(this));
+                this.searchInput.keyup(this.keyUp.bind(this));
+                this.searchInput.keydown(this.keyDown.bind(this));
                 this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
                 this.quickKey.initConfig(new QuickSearch.Config());
             }
-            Search.prototype.keyPressed = function (ev) {
+            Search.prototype.keyDown = function (ev) {
+                var originalEvent = ev.originalEvent;
+                var value = this.searchInput.val();
+                switch (originalEvent.keyCode) {
+                    case this.keyCodes.Backspace:
+                        if (value.isEmpty())
+                            this.quickKey.hideQuickKey();
+                        break;
+                    default:
+                        break;
+                }
+                this.searchInput.focus();
+                this.searchInput.val(value);
+            };
+            Search.prototype.keyUp = function (ev) {
                 var originalEvent = ev.originalEvent;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {

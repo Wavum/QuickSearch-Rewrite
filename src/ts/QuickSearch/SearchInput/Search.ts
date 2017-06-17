@@ -14,7 +14,8 @@ namespace QuickSearch.SearchInput
         {
             this.searchInput = $("#" + searchID);
 
-            this.searchInput.keyup(this.keyPressed.bind(this));
+            this.searchInput.keyup(this.keyUp.bind(this));
+            this.searchInput.keydown(this.keyDown.bind(this));
 
             this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
 
@@ -25,10 +26,35 @@ namespace QuickSearch.SearchInput
 
 
         /**
+         * Handles the input when a key will be pressed
+         * @param ev Event parameter
+         */
+        private keyDown(ev: JQueryKeyEventObject): void
+        {
+            let originalEvent: KeyboardEvent = <KeyboardEvent>ev.originalEvent;
+            let value: string = this.searchInput.val();
+
+            switch (originalEvent.keyCode)
+            {
+
+                case this.keyCodes.Backspace:
+                    if (value.isEmpty())
+                        this.quickKey.hideQuickKey();
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.searchInput.focus();
+            this.searchInput.val(value);
+        }
+
+        /**
          * Handles the input when a key is pressed
          * @param ev Event parameter
          */
-        private keyPressed(ev: JQueryKeyEventObject): void
+        private keyUp(ev: JQueryKeyEventObject): void
         {
             let originalEvent: KeyboardEvent = <KeyboardEvent>ev.originalEvent;
             let value: string = this.searchInput.val();

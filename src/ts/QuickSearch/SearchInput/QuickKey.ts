@@ -38,6 +38,7 @@ namespace QuickSearch.SearchInput
         public hideQuickKey(): void
         {
             this.quickKeyDiv.css("display", "none");
+            this.quickKeyText.text("");
         }
 
 
@@ -66,7 +67,6 @@ namespace QuickSearch.SearchInput
         private show(text: string = ""): void
         {
             this.quickKeyDiv.css("display", "flex");
-
             this.quickKeyText.text(text);
         }
     }
