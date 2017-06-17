@@ -31,6 +31,14 @@ namespace QuickSearch
 
 
         /**
+         * Return this object in JSON format
+         */
+        public getJSON(): string
+        {
+            return JSON.stringify(this);
+        }
+
+        /**
          * Parses a JSON text to fill up the values in this object
          * @param json JSON text to parse
          */
