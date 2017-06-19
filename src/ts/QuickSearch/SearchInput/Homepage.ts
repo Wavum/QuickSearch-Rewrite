@@ -2,29 +2,49 @@ namespace QuickSearch.SearchInput
 {
     export class Homepage
     {
-        protected homepage: string;
+        protected defaultSite: string;
 
 
 
-        public constructor(homepage: string)
+        public constructor()
         {
-            this.homepage = homepage;
+
         }
 
 
 
         /**
-         * Opens the homepage
+         * Initializate the class with a config
+         * @param config Config for initialization
          */
-        public openSite(): void;
+        public initConfig(config: Config): void
+        {
+            this.defaultSite = config.DefaultSite;
+        }
+
         /**
-         * Opens the homepage, quick search site or a link
+         * Opens the default site
+         */
+        public open(): void;
+        /**
+         * Opens the default site
          * @param value Value for search
          */
-        public openSite(value: string): void;
-        public openSite(value: string = ""): void
+        public open(value: string): void;
+        /**
+         * Opens a site
+         * @param site Site to open
+         */
+        public open(site: string): void;
+        /**
+         * Opens a site with a value to search for
+         * @param value Value for search
+         * @param site Site to open
+         */
+        public open(value: string, site: string): void;
+        public open(value: string = "", site: string = ""): void
         {
-            //Test for link
+            //Test for site
             if (Utilities.Validation.isHTTPAddress(value))
             {
                 if (!value.startsWith("http"))
@@ -40,7 +60,14 @@ namespace QuickSearch.SearchInput
             }
 
             //Normal search
-            window.open(this.homepage.format(encodeURIComponent(value)), "_self");
+            if (site === "")
+            {
+                window.open(this.defaultSite.format(encodeURIComponent(value)), "_self");
+            }
+            else
+            {
+                window.open(site.format(encodeURIComponent(value)), "_self");
+            }
         }
     }
 }

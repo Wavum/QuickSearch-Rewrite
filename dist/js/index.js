@@ -183,24 +183,25 @@ var QuickSearch;
                 this.keys = new Array();
             }
             QuickSearches.prototype.addQuickSearch = function (key, site) {
-                this.keys.push({ key: key, site: site });
+                this.keys.push({ Key: key, Site: site });
             };
             QuickSearches.prototype.startsWithKey = function (text) {
-                if (this.getKey(text) === "")
+                if (this.getKeyObjectFromKey(text).Key === "")
                     return false;
                 return true;
             };
-            QuickSearches.prototype.getKey = function (text) {
-                var retKey = "";
-                this.keys.forEach(function (key) {
-                    if (text.startsWith(key.key + " ")) {
-                        retKey = key.key;
+            QuickSearches.prototype.getKeyObjectFromKey = function (text) {
+                var retKey = { Key: "", Site: "" };
+                this.keys.forEach(function (currentKey) {
+                    if (text.startsWith(currentKey.Key + " ")) {
+                        retKey.Key = currentKey.Key;
+                        retKey.Site = currentKey.Site;
                     }
                 }.bind(this));
                 return retKey;
             };
             QuickSearches.prototype.removeKey = function (text) {
-                return text.replace(this.getKey(text) + " ", "");
+                return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
             };
             Object.defineProperty(QuickSearches.prototype, "Keys", {
                 get: function () {
@@ -248,7 +249,7 @@ var QuickSearch;
         function Config() {
             this.useSearchSuggestions = true;
             this.numberOfSearchSuggestions = 4;
-            this.homepage = "https://start.duckduckgo.com/?q={0}";
+            this.defaultSite = "https://start.duckduckgo.com/?q={0}";
             this.quickSearchPattern = "{0} ";
             this.clockSeperator = ":";
             this.shapeColor = "#3a5b83";
@@ -272,7 +273,7 @@ var QuickSearch;
             var parsedConfig = JSON.parse(json);
             this.useSearchSuggestions = parsedConfig.UseSearchSuggestions;
             this.numberOfSearchSuggestions = parsedConfig.NumberOfSearchSuggestions;
-            this.homepage = parsedConfig.Homepage;
+            this.defaultSite = parsedConfig.DefaultSite;
             this.quickSearchPattern = parsedConfig.QuickSearchPattern;
             this.clockSeperator = parsedConfig.ClockSeperator;
             this.shapeColor = parsedConfig.ShapeColor;
@@ -298,12 +299,12 @@ var QuickSearch;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Config.prototype, "Homepage", {
+        Object.defineProperty(Config.prototype, "DefaultSite", {
             get: function () {
-                return this.homepage;
+                return this.defaultSite;
             },
             set: function (value) {
-                this.homepage = value;
+                this.defaultSite = value;
             },
             enumerable: true,
             configurable: true
@@ -385,11 +386,14 @@ var QuickSearch;
     var SearchInput;
     (function (SearchInput) {
         var Homepage = (function () {
-            function Homepage(homepage) {
-                this.homepage = homepage;
+            function Homepage() {
             }
-            Homepage.prototype.openSite = function (value) {
+            Homepage.prototype.initConfig = function (config) {
+                this.defaultSite = config.DefaultSite;
+            };
+            Homepage.prototype.open = function (value, site) {
                 if (value === void 0) { value = ""; }
+                if (site === void 0) { site = ""; }
                 if (QuickSearch.Utilities.Validation.isHTTPAddress(value)) {
                     if (!value.startsWith("http")) {
                         window.open("http://" + value, "_self");
@@ -399,7 +403,12 @@ var QuickSearch;
                     }
                     return;
                 }
-                window.open(this.homepage.format(encodeURIComponent(value)), "_self");
+                if (site === "") {
+                    window.open(this.defaultSite.format(encodeURIComponent(value)), "_self");
+                }
+                else {
+                    window.open(site.format(encodeURIComponent(value)), "_self");
+                }
             };
             return Homepage;
         }());
@@ -412,6 +421,7 @@ var QuickSearch;
     (function (SearchInput) {
         var QuickKey = (function () {
             function QuickKey(parentID) {
+                this.showsQuickKey = false;
                 this.quickKeyDiv = $("#" + parentID);
                 this.quickKeyText = $("#" + parentID + " div.text");
                 this.quickKeyCloseButton = $("#" + parentID + " button.close");
@@ -423,12 +433,13 @@ var QuickSearch;
             QuickKey.prototype.showQuickKey = function (text) {
                 if (!this.quickSearches.startsWithKey(text))
                     return text;
-                this.show(this.quickSearches.getKey(text));
+                this.show(this.quickSearches.getKeyObjectFromKey(text).Key);
                 return this.quickSearches.removeKey(text);
             };
             QuickKey.prototype.hideQuickKey = function () {
                 this.quickKeyDiv.css("display", "none");
                 this.quickKeyText.text("");
+                this.showsQuickKey = false;
             };
             Object.defineProperty(QuickKey.prototype, "QuickSearches", {
                 get: function () {
@@ -440,10 +451,25 @@ var QuickSearch;
                 enumerable: true,
                 configurable: true
             });
+            Object.defineProperty(QuickKey.prototype, "ShowsQuickKey", {
+                get: function () {
+                    return this.showsQuickKey;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(QuickKey.prototype, "CurrentQuickSearchKey", {
+                get: function () {
+                    return this.quickSearches.getKeyObjectFromKey(this.quickKeyText.text());
+                },
+                enumerable: true,
+                configurable: true
+            });
             QuickKey.prototype.show = function (text) {
                 if (text === void 0) { text = ""; }
                 this.quickKeyDiv.css("display", "flex");
                 this.quickKeyText.text(text);
+                this.showsQuickKey = true;
             };
             return QuickKey;
         }());
@@ -624,13 +650,14 @@ var QuickSearch;
             function Search(searchID) {
                 this.quickKey = new SearchInput.QuickKey("main-quickKey");
                 this.searchSuggestions = new SearchInput.SearchSuggestions("main-searchSuggestions");
-                this.homepage = new SearchInput.Homepage("https://start.duckduckgo.com/?q={0}");
+                this.homepage = new SearchInput.Homepage();
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyUp.bind(this));
                 this.searchInput.keydown(this.keyDown.bind(this));
                 this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
                 this.quickKey.initConfig(new QuickSearch.Config());
+                this.homepage.initConfig(new QuickSearch.Config());
             }
             Search.prototype.keyDown = function (ev) {
                 var originalEvent = ev.originalEvent;
@@ -651,7 +678,12 @@ var QuickSearch;
                 var value = this.searchInput.val();
                 switch (originalEvent.keyCode) {
                     case this.keyCodes.Enter:
-                        this.homepage.openSite(value);
+                        if (this.quickKey.ShowsQuickKey) {
+                            this.homepage.open(value, this.quickKey.CurrentQuickSearchKey.Site);
+                        }
+                        else {
+                            this.homepage.open(value);
+                        }
                         break;
                     case this.keyCodes.PageUp:
                     case this.keyCodes.UpArrow:

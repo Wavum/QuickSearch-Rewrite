@@ -20,7 +20,7 @@ namespace QuickSearch.QuickSearchKey
          */
         public addQuickSearch(key: string, site: string): void
         {
-            this.keys.push({ key: key, site: site });
+            this.keys.push({ Key: key, Site: site });
         }
 
         /**
@@ -29,25 +29,26 @@ namespace QuickSearch.QuickSearchKey
          */
         public startsWithKey(text: string): boolean
         {
-            if (this.getKey(text) === "")
+            if (this.getKeyObjectFromKey(text).Key === "")
                 return false;
 
             return true;
         }
 
         /**
-         * Gets a key from a text
-         * @param text Text to get a key from
+         * Gets a key object from a key
+         * @param text Key to get a key object from
          */
-        public getKey(text: string): string
+        public getKeyObjectFromKey(text: string): QuickSearchKeyStructure
         {
-            let retKey: string = "";
+            let retKey: QuickSearchKeyStructure = { Key: "", Site: "" };
 
-            this.keys.forEach(function(key: QuickSearchKey.QuickSearchKeyStructure)
+            this.keys.forEach(function(currentKey: QuickSearchKey.QuickSearchKeyStructure)
             {
-                if (text.startsWith(key.key + " "))
+                if (text.startsWith(currentKey.Key + " "))
                 {
-                    retKey =  key.key;
+                    retKey.Key = currentKey.Key;
+                    retKey.Site = currentKey.Site;
                 }
             }.bind(this));
 
@@ -60,7 +61,7 @@ namespace QuickSearch.QuickSearchKey
          */
         public removeKey(text: string): string
         {
-            return text.replace(this.getKey(text) + " ", "");
+            return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
         }
 
 

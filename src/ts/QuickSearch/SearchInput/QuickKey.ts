@@ -6,6 +6,7 @@ namespace QuickSearch.SearchInput
         private quickKeyText: JQuery;
         private quickKeyCloseButton: JQuery;
         private quickSearches: QuickSearchKey.QuickSearches;
+        private showsQuickKey: boolean = false;
 
 
 
@@ -20,25 +21,38 @@ namespace QuickSearch.SearchInput
 
 
 
+        /**
+         * Initializate the class with a config
+         * @param config Config for initialization
+         */
         public initConfig(config: Config): void
         {
             this.QuickSearches = config.QuickSearches;
         }
 
+        /**
+         * Show the QuickKey
+         * @param text Text to show
+         */
         public showQuickKey(text: string): string
         {
             if (!this.quickSearches.startsWithKey(text))
                 return text;
 
-            this.show(this.quickSearches.getKey(text));
+            this.show(this.quickSearches.getKeyObjectFromKey(text).Key);
 
             return this.quickSearches.removeKey(text);
         }
 
+        /**
+         * Hide the QuickKey
+         */
         public hideQuickKey(): void
         {
             this.quickKeyDiv.css("display", "none");
             this.quickKeyText.text("");
+
+            this.showsQuickKey = false;
         }
 
 
@@ -51,6 +65,17 @@ namespace QuickSearch.SearchInput
         public get QuickSearches(): QuickSearchKey.QuickSearches
         {
             return this.quickSearches;
+        }
+
+        public get ShowsQuickKey(): boolean
+        {
+            return this.showsQuickKey;
+        }
+
+        public get CurrentQuickSearchKey(): QuickSearchKey.QuickSearchKeyStructure
+        {
+            //HERE IT ALL FUCKS UP
+            return this.quickSearches.getKeyObjectFromKey(this.quickKeyText.text());
         }
 
 
@@ -68,6 +93,8 @@ namespace QuickSearch.SearchInput
         {
             this.quickKeyDiv.css("display", "flex");
             this.quickKeyText.text(text);
+
+            this.showsQuickKey = true;
         }
     }
 }

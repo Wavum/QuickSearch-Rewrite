@@ -4,7 +4,7 @@ namespace QuickSearch.SearchInput
     {
         private quickKey: QuickKey = new QuickKey("main-quickKey");
         private searchSuggestions: SearchSuggestions = new SearchSuggestions("main-searchSuggestions");
-        private homepage: Homepage = new Homepage("https://start.duckduckgo.com/?q={0}");
+        private homepage: Homepage = new Homepage();
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 
@@ -21,6 +21,7 @@ namespace QuickSearch.SearchInput
 
             //TODO: Rework this feature
             this.quickKey.initConfig(new Config());
+            this.homepage.initConfig(new Config());
         }
 
 
@@ -36,7 +37,6 @@ namespace QuickSearch.SearchInput
 
             switch (originalEvent.keyCode)
             {
-
                 case this.keyCodes.Backspace:
                     if (value.isEmpty())
                         this.quickKey.hideQuickKey();
@@ -62,7 +62,14 @@ namespace QuickSearch.SearchInput
             switch (originalEvent.keyCode)
             {
                 case this.keyCodes.Enter:
-                    this.homepage.openSite(value);
+                    if (this.quickKey.ShowsQuickKey)
+                    {
+                        this.homepage.open(value, this.quickKey.CurrentQuickSearchKey.Site);
+                    }
+                    else
+                    {
+                        this.homepage.open(value);
+                    }
                     break;
 
                 case this.keyCodes.PageUp:
