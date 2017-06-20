@@ -27,25 +27,39 @@ namespace QuickSearch.QuickSearchKey
          * Tests if a text start with a quick key
          * @param text Text to check
          */
-        public startsWithKey(text: string): boolean
-        {
-            if (this.getKeyObjectFromKey(text).Key === "")
-                return false;
+        // public startsWithKey(text: string): boolean
+        // {
+        //     if (this.getKeyObjectFromKey(text).Key === "")
+        //         return false;
 
-            return true;
+        //     return true;
+        // }
+
+        public existsKeyObject(key: string): boolean;
+        public existsKeyObject(key: QuickSearchKeyStructure): boolean;
+        public existsKeyObject(key: string | QuickSearchKeyStructure): boolean
+        {
+            if (typeof(key) === "string")
+            {
+                return this.getKeyObjectFromKey(key) !== { Key: "", Site: "" };
+            }
+            else
+            {
+                return key !== { Key: "", Site: "" };
+            }
         }
 
         /**
          * Gets a key object from a key
          * @param text Key to get a key object from
          */
-        public getKeyObjectFromKey(text: string): QuickSearchKeyStructure
+        public getKeyObjectFromKey(key: string): QuickSearchKeyStructure
         {
             let retKey: QuickSearchKeyStructure = { Key: "", Site: "" };
 
-            this.keys.forEach(function(currentKey: QuickSearchKey.QuickSearchKeyStructure)
+            this.keys.forEach(function(currentKey: QuickSearchKeyStructure)
             {
-                if (text.startsWith(currentKey.Key + " "))
+                if (key == currentKey.Key)
                 {
                     retKey.Key = currentKey.Key;
                     retKey.Site = currentKey.Site;
@@ -59,10 +73,10 @@ namespace QuickSearch.QuickSearchKey
          * Removes a key from a text
          * @param text Text to remove the key from
          */
-        public removeKey(text: string): string
-        {
-            return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
-        }
+        // public removeKey(text: string): string
+        // {
+        //     return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
+        // }
 
 
 

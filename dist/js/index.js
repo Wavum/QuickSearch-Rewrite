@@ -185,23 +185,23 @@ var QuickSearch;
             QuickSearches.prototype.addQuickSearch = function (key, site) {
                 this.keys.push({ Key: key, Site: site });
             };
-            QuickSearches.prototype.startsWithKey = function (text) {
-                if (this.getKeyObjectFromKey(text).Key === "")
-                    return false;
-                return true;
+            QuickSearches.prototype.existsKeyObject = function (key) {
+                if (typeof (key) === "string") {
+                    return this.getKeyObjectFromKey(key) !== { Key: "", Site: "" };
+                }
+                else {
+                    return key !== { Key: "", Site: "" };
+                }
             };
-            QuickSearches.prototype.getKeyObjectFromKey = function (text) {
+            QuickSearches.prototype.getKeyObjectFromKey = function (key) {
                 var retKey = { Key: "", Site: "" };
                 this.keys.forEach(function (currentKey) {
-                    if (text.startsWith(currentKey.Key + " ")) {
+                    if (key == currentKey.Key) {
                         retKey.Key = currentKey.Key;
                         retKey.Site = currentKey.Site;
                     }
                 }.bind(this));
                 return retKey;
-            };
-            QuickSearches.prototype.removeKey = function (text) {
-                return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
             };
             Object.defineProperty(QuickSearches.prototype, "Keys", {
                 get: function () {
@@ -431,10 +431,11 @@ var QuickSearch;
                 this.QuickSearches = config.QuickSearches;
             };
             QuickKey.prototype.showQuickKey = function (text) {
-                if (!this.quickSearches.startsWithKey(text))
+                var keyObject = this.quickSearches.getKeyObjectFromKey(text);
+                if (!this.quickSearches.existsKeyObject(keyObject))
                     return text;
-                this.show(this.quickSearches.getKeyObjectFromKey(text).Key);
-                return this.quickSearches.removeKey(text);
+                this.show(keyObject.Key);
+                return text.replace(keyObject.Key + " ", "");
             };
             QuickKey.prototype.hideQuickKey = function () {
                 this.quickKeyDiv.css("display", "none");

@@ -32,16 +32,21 @@ namespace QuickSearch.SearchInput
 
         /**
          * Show the QuickKey
-         * @param text Text to show
+         * @param text New text to show
          */
         public showQuickKey(text: string): string
         {
-            if (!this.quickSearches.startsWithKey(text))
+            //Get key object
+            let keyObject: QuickSearchKey.QuickSearchKeyStructure = this.quickSearches.getKeyObjectFromKey(text);
+
+            //Test if key object exists
+            if (!this.quickSearches.existsKeyObject(keyObject))
                 return text;
 
-            this.show(this.quickSearches.getKeyObjectFromKey(text).Key);
+            this.show(keyObject.Key);
 
-            return this.quickSearches.removeKey(text);
+            //Remove QuickKey from text
+            return text.replace(keyObject.Key + " ", "");
         }
 
         /**
