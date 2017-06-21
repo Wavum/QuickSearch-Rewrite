@@ -1,29 +1,17 @@
 namespace QuickSearch.QuickSearchKey
 {
-    export class QuickSearches
+    export abstract class AbstractQuickSearches
     {
-        private keyStart: string = "";
-        private keyEnd: string = " ";
         private keys: Array<QuickSearchKeyStructure> = new Array<QuickSearchKeyStructure>();
 
 
 
-        public constructor()
+        private constructor()
         {
 
         }
 
 
-
-        /**
-         * Initializate the class with a config
-         * @param config Config for initialization
-         */
-        public initConfig(config: Config): void
-        {
-            this.keyStart = config.KeyStart;
-            this.keyEnd = config.KeyEnd;
-        }
 
         /**
          * Add a new QuickSearch
@@ -33,32 +21,6 @@ namespace QuickSearch.QuickSearchKey
         public addQuickSearch(key: string, site: string): void
         {
             this.keys.push({ Key: key, Site: site });
-        }
-
-        /**
-         * Tests if a text start with a quick key
-         * @param text Text to check
-         */
-        // public startsWithKey(text: string): boolean
-        // {
-        //     if (this.getKeyObjectFromKey(text).Key === "")
-        //         return false;
-
-        //     return true;
-        // }
-
-        public existsKeyObject(key: string): boolean;
-        public existsKeyObject(key: QuickSearchKeyStructure): boolean;
-        public existsKeyObject(key: string | QuickSearchKeyStructure): boolean
-        {
-            if (typeof(key) === "string")
-            {
-                return this.getKeyObjectFromKey(key) !== { Key: "", Site: "" };
-            }
-            else
-            {
-                return key !== { Key: "", Site: "" };
-            }
         }
 
         /**
@@ -101,40 +63,11 @@ namespace QuickSearch.QuickSearchKey
             return retKey;
         }
 
-        /**
-         * Removes a key from a text
-         * @param text Text to remove the key from
-         */
-        // public removeKey(text: string): string
-        // {
-        //     return text.replace(this.getKeyObjectFromKey(text).Key + " ", "");
-        // }
-
 
 
         public get Keys(): QuickSearchKeyStructure[]
         {
             return this.keys;
-        }
-
-        public get KeyStart(): string
-        {
-            return this.keyStart;
-        }
-
-        public set KeyStart(value: string)
-        {
-            this.keyStart = value;
-        }
-
-        public get KeyEnd(): string
-        {
-            return this.keyEnd;
-        }
-
-        public set KeyEnd(value: string)
-        {
-            this.keyEnd = value;
         }
     }
 }

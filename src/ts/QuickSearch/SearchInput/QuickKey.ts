@@ -2,11 +2,11 @@ namespace QuickSearch.SearchInput
 {
     export class QuickKey
     {
+        private showsQuickKey: boolean = false;
         private quickKeyDiv: JQuery;
         private quickKeyText: JQuery;
         private quickKeyCloseButton: JQuery;
-        private quickSearches: QuickSearchKey.QuickSearches;
-        private showsQuickKey: boolean = false;
+        private quickSearches: QuickSearchKey.QuickSearches = new QuickSearchKey.QuickSearches();
 
 
 
@@ -27,7 +27,7 @@ namespace QuickSearch.SearchInput
          */
         public initConfig(config: Config): void
         {
-            this.QuickSearches = config.QuickSearches;
+            this.quickSearches = config.QuickSearches;
         }
 
         /**
@@ -61,16 +61,6 @@ namespace QuickSearch.SearchInput
         }
 
 
-
-        public set QuickSearches(value: QuickSearchKey.QuickSearches)
-        {
-            this.quickSearches = value;
-        }
-
-        public get QuickSearches(): QuickSearchKey.QuickSearches
-        {
-            return this.quickSearches;
-        }
 
         public get ShowsQuickKey(): boolean
         {

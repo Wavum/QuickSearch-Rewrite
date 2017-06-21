@@ -9,12 +9,16 @@ namespace QuickSearch
         private quickSearchPattern: string = "{0} ";
         private clockSeperator: string = ":";
         private shapeColor: string = "#3a5b83";
+        private keyStart: string = "";
+        private keyEnd: string = " ";
         private quickSearches: QuickSearchKey.QuickSearches = new QuickSearchKey.QuickSearches();
 
 
 
         public constructor()
         {
+            this.quickSearches.initConfig(this);
+
             this.quickSearches.addQuickSearch("d", "https://start.duckduckgo.com/?q={0}");
             this.quickSearches.addQuickSearch("s", "https://startpage.com/do/search?query={0}");
             this.quickSearches.addQuickSearch("g", "https://encrypted.google.com/#q={0}");
@@ -115,6 +119,26 @@ namespace QuickSearch
         public get ShapeColor(): string
         {
             return this.shapeColor;
+        }
+
+        public set KeyStart(value: string)
+        {
+            this.keyStart = value;
+        }
+
+        public get KeyStart(): string
+        {
+            return this.keyStart;
+        }
+
+        public set KeyEnd(value: string)
+        {
+            this.keyEnd = value;
+        }
+
+        public get KeyEnd(): string
+        {
+            return this.keyEnd;
         }
 
         public set QuickSearches(value: QuickSearchKey.QuickSearches)
