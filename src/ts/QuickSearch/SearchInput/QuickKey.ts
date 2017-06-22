@@ -6,7 +6,7 @@ namespace QuickSearch.SearchInput
         private quickKeyDiv: JQuery;
         private quickKeyText: JQuery;
         private quickKeyCloseButton: JQuery;
-        private quickSearches: QuickSearchKey.QuickSearches = new QuickSearchKey.QuickSearches();
+        private quickSearches: QuickSearches.QuickSearches = new QuickSearches.QuickSearches();
 
 
 
@@ -37,16 +37,16 @@ namespace QuickSearch.SearchInput
         public showQuickKey(text: string): string
         {
             //Get key object
-            let keyObject: QuickSearchKey.QuickSearchKeyStructure = this.quickSearches.getKeyObjectFromKey(text);
+            let keyObject: QuickSearches.QuickSearch | undefined = this.quickSearches.getFromKey(text);
 
             //Test if key object exists
-            if (!this.quickSearches.existsKeyObject(keyObject))
+            if (keyObject === undefined)
                 return text;
 
-            this.show(keyObject.Key);
+            this.show(keyObject.Key.FullKey);
 
             //Remove QuickKey from text
-            return text.replace(keyObject.Key + " ", "");
+            return text.replace(keyObject.Key.FullKey, "");
         }
 
         /**
@@ -67,10 +67,9 @@ namespace QuickSearch.SearchInput
             return this.showsQuickKey;
         }
 
-        public get CurrentQuickSearchKey(): QuickSearchKey.QuickSearchKeyStructure
+        public get CurrentQuickSearch(): QuickSearches.QuickSearch | undefined
         {
-            //HERE IT ALL FUCKS UP
-            return this.quickSearches.getKeyObjectFromKey(this.quickKeyText.text());
+            return this.quickSearches.getFromKey(this.quickKeyText.text());
         }
 
 

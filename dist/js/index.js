@@ -186,7 +186,7 @@ var QuickSearch;
             this.shapeColor = "#3a5b83";
             this.keyStart = "";
             this.keyEnd = " ";
-            this.quickSearches = new QuickSearch.QuickSearchKey.QuickSearches();
+            this.quickSearches = new QuickSearch.QuickSearches.QuickSearches();
             this.quickSearches.initConfig(this);
             this.quickSearches.addQuickSearch("d", "https://start.duckduckgo.com/?q={0}");
             this.quickSearches.addQuickSearch("s", "https://startpage.com/do/search?query={0}");
@@ -309,95 +309,136 @@ var QuickSearch;
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var QuickSearchKey;
-    (function (QuickSearchKey) {
-        var AbstractQuickSearches = (function () {
-            function AbstractQuickSearches() {
-                this.keys = new Array();
+    var QuickSearches;
+    (function (QuickSearches) {
+        var QuickSearchKey = (function () {
+            function QuickSearchKey(keyStart, key, keyEnd) {
+                this.keyStart = keyStart;
+                this.key = key;
+                this.keyEnd = keyEnd;
             }
-            AbstractQuickSearches.prototype.addQuickSearch = function (key, site) {
-                this.keys.push({ Key: key, Site: site });
-            };
-            AbstractQuickSearches.prototype.getKeyObjectFromOriginalKey = function (key) {
-                var retKey = { Key: "", Site: "" };
-                this.keys.forEach(function (currentKey) {
-                    if (key == currentKey.Key) {
-                        retKey.Key = currentKey.Key;
-                        retKey.Site = currentKey.Site;
-                    }
-                }.bind(this));
-                return retKey;
-            };
-            AbstractQuickSearches.prototype.getKeyObjectFromKey = function (key) {
-                var retKey = { Key: "", Site: "" };
-                this.keys.forEach(function (currentKey) {
-                    if (key == this.keyStart + currentKey.Key + this.keyEnd) {
-                        retKey.Key = currentKey.Key;
-                        retKey.Site = currentKey.Site;
-                    }
-                }.bind(this));
-                return retKey;
-            };
-            Object.defineProperty(AbstractQuickSearches.prototype, "Keys", {
+            Object.defineProperty(QuickSearchKey.prototype, "KeyStart", {
                 get: function () {
-                    return this.keys;
+                    return this.keyStart;
+                },
+                set: function (value) {
+                    this.keyStart = value;
                 },
                 enumerable: true,
                 configurable: true
             });
-            return AbstractQuickSearches;
+            Object.defineProperty(QuickSearchKey.prototype, "Key", {
+                get: function () {
+                    return this.key;
+                },
+                set: function (value) {
+                    this.key = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(QuickSearchKey.prototype, "KeyEnd", {
+                get: function () {
+                    return this.keyEnd;
+                },
+                set: function (value) {
+                    this.keyEnd = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(QuickSearchKey.prototype, "FullKey", {
+                get: function () {
+                    return this.keyStart + this.key + this.keyEnd;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return QuickSearchKey;
         }());
-        QuickSearchKey.AbstractQuickSearches = AbstractQuickSearches;
-    })(QuickSearchKey = QuickSearch.QuickSearchKey || (QuickSearch.QuickSearchKey = {}));
+        QuickSearches.QuickSearchKey = QuickSearchKey;
+    })(QuickSearches = QuickSearch.QuickSearches || (QuickSearch.QuickSearches = {}));
+})(QuickSearch || (QuickSearch = {}));
+var QuickSearch;
+(function (QuickSearch_1) {
+    var QuickSearches;
+    (function (QuickSearches) {
+        var QuickSearch = (function () {
+            function QuickSearch(key, site) {
+                this.key = key;
+                this.site = site;
+            }
+            Object.defineProperty(QuickSearch.prototype, "Key", {
+                get: function () {
+                    return this.key;
+                },
+                set: function (value) {
+                    this.key = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(QuickSearch.prototype, "Site", {
+                get: function () {
+                    return this.site;
+                },
+                set: function (value) {
+                    this.site = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return QuickSearch;
+        }());
+        QuickSearches.QuickSearch = QuickSearch;
+    })(QuickSearches = QuickSearch_1.QuickSearches || (QuickSearch_1.QuickSearches = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
-    var QuickSearchKey;
-    (function (QuickSearchKey) {
+    var QuickSearches;
+    (function (QuickSearches_1) {
         var QuickSearches = (function () {
             function QuickSearches() {
                 this.keyStart = "";
                 this.keyEnd = " ";
-                this.keys = new Array();
+                this.quickSearches = new Array();
             }
             QuickSearches.prototype.initConfig = function (config) {
                 this.keyStart = config.KeyStart;
                 this.keyEnd = config.KeyEnd;
             };
             QuickSearches.prototype.addQuickSearch = function (key, site) {
-                this.keys.push({ Key: key, Site: site });
+                var quickKey = new QuickSearches_1.QuickSearchKey(this.keyStart, key, this.keyEnd);
+                var quickSearch = new QuickSearches_1.QuickSearch(quickKey, site);
+                this.quickSearches.push(quickSearch);
             };
-            QuickSearches.prototype.existsKeyObject = function (key) {
+            QuickSearches.prototype.exists = function (key) {
                 if (typeof (key) === "string") {
-                    return this.getKeyObjectFromKey(key) !== { Key: "", Site: "" };
+                    return this.getFromKey(key) !== undefined;
                 }
                 else {
-                    return key !== { Key: "", Site: "" };
+                    return this.getFromKey(key) !== undefined;
                 }
             };
-            QuickSearches.prototype.getKeyObjectFromOriginalKey = function (key) {
-                var retKey = { Key: "", Site: "" };
-                this.keys.forEach(function (currentKey) {
-                    if (key == currentKey.Key) {
-                        retKey.Key = currentKey.Key;
-                        retKey.Site = currentKey.Site;
+            QuickSearches.prototype.getFromKey = function (key) {
+                var returnQuickSearch = undefined;
+                this.quickSearches.forEach(function (currentQuickSearch) {
+                    if (typeof (key) === "string") {
+                        if (key === currentQuickSearch.Key.FullKey) {
+                            returnQuickSearch = currentQuickSearch;
+                        }
                     }
-                }.bind(this));
-                return retKey;
-            };
-            QuickSearches.prototype.getKeyObjectFromKey = function (key) {
-                var retKey = { Key: "", Site: "" };
-                this.keys.forEach(function (currentKey) {
-                    if (key == this.keyStart + currentKey.Key + this.keyEnd) {
-                        retKey.Key = currentKey.Key;
-                        retKey.Site = currentKey.Site;
+                    else {
+                        if (key === currentQuickSearch.Key) {
+                            returnQuickSearch = currentQuickSearch;
+                        }
                     }
-                }.bind(this));
-                return retKey;
+                });
+                return returnQuickSearch;
             };
-            Object.defineProperty(QuickSearches.prototype, "Keys", {
+            Object.defineProperty(QuickSearches.prototype, "QuickSearches", {
                 get: function () {
-                    return this.keys;
+                    return this.quickSearches;
                 },
                 enumerable: true,
                 configurable: true
@@ -424,8 +465,8 @@ var QuickSearch;
             });
             return QuickSearches;
         }());
-        QuickSearchKey.QuickSearches = QuickSearches;
-    })(QuickSearchKey = QuickSearch.QuickSearchKey || (QuickSearch.QuickSearchKey = {}));
+        QuickSearches_1.QuickSearches = QuickSearches;
+    })(QuickSearches = QuickSearch.QuickSearches || (QuickSearch.QuickSearches = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
 (function (QuickSearch) {
@@ -490,7 +531,7 @@ var QuickSearch;
         var QuickKey = (function () {
             function QuickKey(parentID) {
                 this.showsQuickKey = false;
-                this.quickSearches = new QuickSearch.QuickSearchKey.QuickSearches();
+                this.quickSearches = new QuickSearch.QuickSearches.QuickSearches();
                 this.quickKeyDiv = $("#" + parentID);
                 this.quickKeyText = $("#" + parentID + " div.text");
                 this.quickKeyCloseButton = $("#" + parentID + " button.close");
@@ -500,11 +541,11 @@ var QuickSearch;
                 this.quickSearches = config.QuickSearches;
             };
             QuickKey.prototype.showQuickKey = function (text) {
-                var keyObject = this.quickSearches.getKeyObjectFromKey(text);
-                if (!this.quickSearches.existsKeyObject(keyObject))
+                var keyObject = this.quickSearches.getFromKey(text);
+                if (keyObject === undefined)
                     return text;
-                this.show(keyObject.Key);
-                return text.replace(keyObject.Key + " ", "");
+                this.show(keyObject.Key.FullKey);
+                return text.replace(keyObject.Key.FullKey, "");
             };
             QuickKey.prototype.hideQuickKey = function () {
                 this.quickKeyDiv.css("display", "none");
@@ -518,9 +559,9 @@ var QuickSearch;
                 enumerable: true,
                 configurable: true
             });
-            Object.defineProperty(QuickKey.prototype, "CurrentQuickSearchKey", {
+            Object.defineProperty(QuickKey.prototype, "CurrentQuickSearch", {
                 get: function () {
-                    return this.quickSearches.getKeyObjectFromKey(this.quickKeyText.text());
+                    return this.quickSearches.getFromKey(this.quickKeyText.text());
                 },
                 enumerable: true,
                 configurable: true
@@ -540,13 +581,13 @@ var QuickSearch;
 (function (QuickSearch) {
     var SearchInput;
     (function (SearchInput) {
-        var Homepage = (function () {
-            function Homepage() {
+        var Site = (function () {
+            function Site() {
             }
-            Homepage.prototype.initConfig = function (config) {
+            Site.prototype.initConfig = function (config) {
                 this.defaultSite = config.DefaultSite;
             };
-            Homepage.prototype.open = function (value, site) {
+            Site.prototype.open = function (value, site) {
                 if (value === void 0) { value = ""; }
                 if (site === void 0) { site = ""; }
                 if (QuickSearch.Utilities.Validation.isHTTPAddress(value)) {
@@ -565,9 +606,9 @@ var QuickSearch;
                     window.open(site.format(encodeURIComponent(value)), "_self");
                 }
             };
-            return Homepage;
+            return Site;
         }());
-        SearchInput.Homepage = Homepage;
+        SearchInput.Site = Site;
     })(SearchInput = QuickSearch.SearchInput || (QuickSearch.SearchInput = {}));
 })(QuickSearch || (QuickSearch = {}));
 var QuickSearch;
@@ -744,14 +785,14 @@ var QuickSearch;
             function Search(searchID) {
                 this.quickKey = new SearchInput.QuickKey("main-quickKey");
                 this.searchSuggestions = new SearchInput.SearchSuggestions("main-searchSuggestions");
-                this.homepage = new SearchInput.Homepage();
+                this.site = new SearchInput.Site();
                 this.keyCodes = QuickSearch.Utilities.KeyCodes;
                 this.searchInput = $("#" + searchID);
                 this.searchInput.keyup(this.keyUp.bind(this));
                 this.searchInput.keydown(this.keyDown.bind(this));
                 this.searchSuggestions.onclick = this.searchSuggestionClicked.bind(this);
                 this.quickKey.initConfig(new QuickSearch.Config());
-                this.homepage.initConfig(new QuickSearch.Config());
+                this.site.initConfig(new QuickSearch.Config());
             }
             Search.prototype.keyDown = function (ev) {
                 var originalEvent = ev.originalEvent;
@@ -773,10 +814,16 @@ var QuickSearch;
                 switch (originalEvent.keyCode) {
                     case this.keyCodes.Enter:
                         if (this.quickKey.ShowsQuickKey) {
-                            this.homepage.open(value, this.quickKey.CurrentQuickSearchKey.Site);
+                            var keyObject = this.quickKey.CurrentQuickSearch;
+                            if (keyObject === undefined) {
+                                this.site.open(value);
+                            }
+                            else {
+                                this.site.open(value, keyObject.Site);
+                            }
                         }
                         else {
-                            this.homepage.open(value);
+                            this.site.open(value);
                         }
                         break;
                     case this.keyCodes.PageUp:

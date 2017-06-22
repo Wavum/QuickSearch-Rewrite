@@ -1,6 +1,6 @@
 namespace QuickSearch.SearchInput
 {
-    export class Homepage
+    export class Site
     {
         protected defaultSite: string;
 

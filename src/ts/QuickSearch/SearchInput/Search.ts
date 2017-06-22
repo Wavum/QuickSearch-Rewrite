@@ -4,7 +4,7 @@ namespace QuickSearch.SearchInput
     {
         private quickKey: QuickKey = new QuickKey("main-quickKey");
         private searchSuggestions: SearchSuggestions = new SearchSuggestions("main-searchSuggestions");
-        private homepage: Homepage = new Homepage();
+        private site: Site = new Site();
         private searchInput: JQuery;
         private keyCodes: typeof Utilities.KeyCodes = Utilities.KeyCodes;
 
@@ -21,7 +21,7 @@ namespace QuickSearch.SearchInput
 
             //TODO: Rework this feature
             this.quickKey.initConfig(new Config());
-            this.homepage.initConfig(new Config());
+            this.site.initConfig(new Config());
         }
 
 
@@ -64,11 +64,23 @@ namespace QuickSearch.SearchInput
                 case this.keyCodes.Enter:
                     if (this.quickKey.ShowsQuickKey)
                     {
-                        this.homepage.open(value, this.quickKey.CurrentQuickSearchKey.Site);
+                        //Get key object
+                        let keyObject: QuickSearches.QuickSearch | undefined = this.quickKey.CurrentQuickSearch;
+
+                        //Test if key object exists
+                        if (keyObject === undefined)
+                        {
+                            this.site.open(value);
+                        }
+                        else
+                        {
+                            this.site.open(value, keyObject.Site);
+                        }
+
                     }
                     else
                     {
-                        this.homepage.open(value);
+                        this.site.open(value);
                     }
                     break;
 

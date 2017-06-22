@@ -11,7 +11,7 @@ namespace QuickSearch
         private shapeColor: string = "#3a5b83";
         private keyStart: string = "";
         private keyEnd: string = " ";
-        private quickSearches: QuickSearchKey.QuickSearches = new QuickSearchKey.QuickSearches();
+        private quickSearches: QuickSearches.QuickSearches = new QuickSearches.QuickSearches();
 
 
 
@@ -141,12 +141,12 @@ namespace QuickSearch
             return this.keyEnd;
         }
 
-        public set QuickSearches(value: QuickSearchKey.QuickSearches)
+        public set QuickSearches(value: QuickSearches.QuickSearches)
         {
             this.quickSearches = value;
         }
 
-        public get QuickSearches(): QuickSearchKey.QuickSearches
+        public get QuickSearches(): QuickSearches.QuickSearches
         {
             return this.quickSearches;
         }
