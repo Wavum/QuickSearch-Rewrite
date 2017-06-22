@@ -38,7 +38,15 @@ namespace QuickSearch.QuickSearches
             this.quickSearches.push(quickSearch);
         }
 
-        public exists(key: string): boolean;
+        /**
+         * Check if a quickSearch object exists
+         * @param fullKey Full key (with keyStart, key and keyEnd) to check if a quickSearch object exist
+         */
+        public exists(fullKey: string): boolean;
+        /**
+         * Check if a quickSearch object exists
+         * @param key Key to check if a quickSearch object exist
+         */
         public exists(key: QuickSearchKey): boolean;
         public exists(key: string | QuickSearchKey): boolean
         {
