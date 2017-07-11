@@ -37,7 +37,7 @@ namespace QuickSearch.Data
 
             let script: HTMLScriptElement = document.createElement("script");
 
-            script.src = "http://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=QuickSearch.Data.GoogleData.getSearchSuggestions." + id;
+            script.src = "https://suggestqueries.google.com/complete/search?client=chrome&q=" + encodeURIComponent(value) + "&callback=QuickSearch.Data.GoogleData.getSearchSuggestions." + id;
             script.id = "searchSuggestionsQuery" + id;
 
             document.head.appendChild(script);
