@@ -1,10 +1,5 @@
 {
-    "eslint.workingDirectories": ["src"],
-
-    "tslint.exclude": ["node_modules", "dist"],
-
-    "search.exclude":
-    {
+    "search.exclude": {
         "**/node_modules": true,
         "**/dist": true
     }

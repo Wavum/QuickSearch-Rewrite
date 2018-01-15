@@ -1,8 +1,7 @@
 {
     "version": "0.1.0",
     "showOutput": "silent",
-    "tasks":
-    [
+    "tasks": [
         {
             "taskName": "Build",
             "command": "gulp",
