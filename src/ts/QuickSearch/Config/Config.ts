@@ -30,6 +30,8 @@ namespace QuickSearch
             this.quickSearches.addQuickSearch("gh", "https://github.com/search?q={0}");
             this.quickSearches.addQuickSearch("f", "https://www.facebook.com/public?query={0}");
             this.quickSearches.addQuickSearch("dict", "http://www.dict.cc/?s={0}");
+            this.quickSearches.addQuickSearch("ama", "https://www.amazon.de/s/field-keywords={0}");
+            this.quickSearches.addQuickSearch("alt", "https://alternativeto.net/browse/search?q={0}");
         }
 
 
